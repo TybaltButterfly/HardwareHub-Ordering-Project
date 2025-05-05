@@ -1,0 +1,81 @@
+<app-navbar></app-navbar>
+
+<div class="categories-page">
+  <section class="categories-container" aria-label="Product categories">
+    <header class="categories-header">
+      <h1 *ngIf="categoryName; else allCategoriesHeader">{{ currentCategoryName }}</h1>
+      <ng-template #allCategoriesHeader>
+        <h1>All Categories</h1>
+      </ng-template>
+      <p class="subtitle" *ngIf="categoryName; else allCategoriesSubtitle">
+        Explore products in the {{ currentCategoryName }} category.
+      </p>    
+      <ng-template #allCategoriesSubtitle>
+        <p class="subtitle">Explore tools, materials, and supplies by department.</p>
+      </ng-template>
+    </header>
+
+    <div *ngIf="!categoryName" class="search-bar">
+      <label for="categorySearch" class="visually-hidden">Search categories</label>
+      <input
+        id="categorySearch"
+        type="search"
+        placeholder="Search categories..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        aria-describedby="searchHelp"
+      />
+      <small id="searchHelp" class="sr-only">Type to filter categories by name</small>
+    </div>
+
+    <div *ngIf="!categoryName" class="category-grid" role="list">
+      <a
+        *ngFor="let category of filteredCategories"
+        [routerLink]="category.routerLink"
+        class="category-card"
+        role="listitem"
+        tabindex="0"
+        [attr.aria-label]="category.name + ' category, ' + (category.caption ? category.caption : '')"
+      >
+        <img
+          [src]="'/' + category.image"
+          alt="{{ category.altText }}"
+          class="category-image"
+          loading="lazy"
+        />
+        <div class="category-info">
+          <h2 class="category-name">{{ category.name }}</h2>
+          <p class="category-caption" *ngIf="category.caption">{{ category.caption }}</p>
+        </div>
+      </a>
+    </div>
+
+    <div *ngIf="categoryName" class="product-search-bar">
+      <label for="productSearch" class="visually-hidden">Search products</label>
+      <input
+        id="productSearch"
+        type="search"
+        placeholder="Search products in {{ currentCategoryName }}..."
+        [(ngModel)]="productSearchTerm"
+        (input)="onProductSearchChange()"
+        aria-describedby="productSearchHelp"
+      />
+      <small id="productSearchHelp" class="sr-only">Type to filter products by name or description</small>
+    </div>
+
+    <div *ngIf="categoryName" class="product-list" role="list">
+    <div *ngFor="let product of filteredProducts" class="product-card category-card" role="listitem" tabindex="0">
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-description">{{ product.description }}</p>
+  <p class="product-price">₱{{ product.price.toFixed(2) }}</p>
+      </div>
+      <p *ngIf="filteredProducts.length === 0">No products found.</p>
+    </div>
+
+    <div *ngIf="!categoryName" class="view-all-products">
+      <a routerLink="/products" class="btn btn-primary" aria-label="View all products">
+        View All Products
+      </a>
+    </div>
+  </section>
+</div>

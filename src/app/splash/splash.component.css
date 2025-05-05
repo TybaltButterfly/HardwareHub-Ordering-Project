@@ -1,0 +1,117 @@
+/* Fullscreen background with centered splash content */
+.splash-wrapper {
+    height: 100vh;
+    background: url('/bg-tools.jpg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Dark overlay to make text/logo stand out */
+  .splash-overlay {
+    background-color: rgba(0, 0, 0, 0.6); 
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  /* Logo image */
+  .splash-logo {
+    width: 200px;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    object-fit: contain;
+  }
+  
+  /* App name under the logo */
+  .app-name {
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    color: white;
+    -webkit-text-stroke: 1px black;
+  }
+  
+/* Button group container */
+.button-toggle {
+    display: flex;
+    width: 400px;
+    background-color: #e0e0e0;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Button base styles */
+  .toggle-btn {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: bold;
+    color: #3c3c3c;
+    background-color: transparent;
+  }
+  
+  /* Active button */
+  .toggle-btn.active {
+    background-color: #2ec4b6;
+    color: white;
+  }
+  
+  /* Hover for Login */
+  .toggle-btn.active:hover {
+    background-color: #269f97;
+  }
+  
+  /* Hover for Sign Up */
+  .toggle-btn:not(.active):hover {
+    background-color: #969494;
+    color: #000;
+  }
+  
+  /* Responsive adjustments for small screens */
+  @media (max-width: 480px) {
+    .splash-logo {
+      width: 60px;
+    }
+  
+    .app-name {
+      font-size: 24px;
+    }
+  
+    .login-btn,
+    .signup-btn {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    .button-row {
+      width: 160px;
+    }
+  }
+
+  /* Additional responsiveness for medium screens */
+  @media (max-width: 768px) {
+    .button-toggle {
+      width: 300px;
+    }
+    .app-name {
+      font-size: 30px;
+      margin-bottom: 30px;
+    }
+  }

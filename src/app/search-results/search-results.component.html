@@ -1,0 +1,15 @@
+<div class="search-results">
+  <h2>Search Results for "{{ query }}"</h2>
+  <div *ngIf="filteredProducts.length > 0; else noResults">
+    <ul>
+      <li *ngFor="let product of filteredProducts">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <p>Price: ${{ product.price.toFixed(2) }}</p>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noResults>
+    <p>No products found matching your search.</p>
+  </ng-template>
+</div>

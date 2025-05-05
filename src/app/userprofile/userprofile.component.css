@@ -1,0 +1,92 @@
+.profile-container {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: var(--primary-light);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: var(--neutral-dark);
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+}
+
+.close-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-dark);
+  cursor: pointer;
+  user-select: none;
+}
+
+.profile-picture-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--neutral-dark);
+}
+
+#name, #email {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--primary-dark);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  color: var(--neutral-dark);
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="file"]:focus {
+  outline: none;
+  border-color: var(--primary-dark);
+  box-shadow: 0 0 8px var(--primary-dark);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--neutral-light);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+button:hover {
+  background-color: var(--primary-dark);
+}

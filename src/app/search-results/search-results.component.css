@@ -1,0 +1,14 @@
+/* Styles for the search results component */
+.search-results {
+  padding: 20px;
+}
+
+.search-results h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.search-results p {
+  font-size: 1em;
+  color: #666;
+}

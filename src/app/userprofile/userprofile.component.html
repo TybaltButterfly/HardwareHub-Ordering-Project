@@ -1,0 +1,19 @@
+<div class="profile-container">
+  <span class="close-icon" (click)="goBack()" aria-label="Close profile">&#10005;</span>
+  <h2>Edit Profile</h2>
+  <form (ngSubmit)="saveProfile()">
+    <div class="profile-picture-section">
+      <img *ngIf="user.profilePicture" [src]="user.profilePicture" alt="Profile Picture" class="profile-picture" />
+      <input type="file" id="profilePicture" name="profilePicture" autocomplete="off" (change)="onFileSelected($event)" accept="image/*" />
+    </div>    
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input id="name" type="text" [(ngModel)]="user.name" name="name" autocomplete="name" required placeholder="{{ user.name }}" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input id="email" [(ngModel)]="user.email" name="email" type="email" autocomplete="email" required placeholder="{{ user.email }}" />
+    </div>
+    <button type="submit">Save</button>
+  </form>
+</div>

@@ -1,0 +1,179 @@
+<app-navbar></app-navbar>
+
+<div class="page-container">
+<section class="promotional-banner">
+  <div class="banner-content">
+    <span class="banner-message">{{ bannerMessage }}</span>
+    <button class="banner-cta" (click)="onBannerCtaClick()">{{ bannerCtaLabel }}</button>
+  </div>
+</section>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1>HardwareHub</h1>
+    <p><em>"Your ultimate hardware store On-the-Go"</em></p>
+    <button class="explore-btn" (click)="scrollToNewArrivals()">Explore More</button>
+  </div>
+  <div class="hero-right">
+    <img src="/homepage.png" alt="Hardware Tools" class="hero-image" />
+  </div>
+</section>
+
+<section class="popular-categories">
+  <div class="section-header">
+    <h2>Popular Categories</h2>
+    <p class="subtitle">Browse our most in-demand products.</p>
+  </div>
+  
+  <div class="categories-grid">
+    <a *ngFor="let category of popularCategories" [routerLink]="category.route" class="category-card" tabindex="0" [attr.aria-label]="category.name">
+      <img [src]="category.image" [alt]="category.name" />
+      <div class="text-overlay">
+        <h3 class="category-name">{{ category.name }}</h3>
+        <p *ngIf="category.caption" class="category-caption">{{ category.caption }}</p>
+      </div>      
+      <span *ngIf="category.isHot" class="hot-tag">Hot</span>
+    </a>
+  </div>
+  
+  <div class="view-all-wrapper">
+    <a routerLink="/categories" class="view-all-btn">See All Categories</a>
+  </div>
+</section>
+
+  <section class="flash-sales">
+  <div class="flash-sales-header">
+    <h2>Flash Sales</h2>
+    <a routerLink="/flash-sales" class="view-all-link">View all</a>
+  </div>
+  <div class="flash-sales-carousel">
+      <div class="flash-sale-card" *ngFor="let product of flashSales">
+        <div class="deal-label">
+          <span>Deal of the Day</span>
+          <div class="countdown-timer" *ngIf="product.timeLeft">
+            {{ formatTime(product.timeLeft.hours) }} : {{ formatTime(product.timeLeft.minutes) }} : {{ formatTime(product.timeLeft.seconds) }}
+          </div>
+        </div>
+<img [src]="getProductImage(product)" [alt]="getProductName(product)" class="product-image" />
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-description">{{ product.description }}</p>
+        <div class="price-info">
+          <span class="original-price">₱{{ product.price | number:'1.0-0' }}</span>
+          <span class="sale-price">₱{{ product.salePrice | number:'1.0-0' }}</span>
+          <span class="discount-percent">{{ getDiscountPercent(product) }}%</span>
+        </div>
+        <div class="rating" *ngIf="product.rating !== undefined && product.rating !== null">
+          <span *ngFor="let star of [1,2,3,4,5]; let i = index">
+            <i class="fa" [ngClass]="getStarClass(product.rating, i)"></i>
+          </span>        
+          <span class="rating-value">{{ product.rating.toFixed(1) }}</span>
+        </div>
+      </div>
+  </div>
+</section>
+
+<section class="new-arrivals">
+  <div class="new-arrivals-header">
+    <div class="new-arrivals-title">
+      <h2>New Arrivals</h2>
+      <a href="#" class="view-all-new-products">View All Products</a>
+    </div>
+    <p>Check out the latest additions to our hardware inventory.</p>
+  </div>  
+  <div class="new-arrivals-grid">
+    <div class="product-card" *ngFor="let product of newArrivals">
+      <div class="product-image-wrapper">
+<img [src]="getProductImage(product)" [alt]="getProductName(product)" class="product-image" />
+        <span class="new-badge">New</span>
+      </div>
+      <h3 class="product-name">{{ product.name }}</h3>
+      <p class="product-description">{{ product.description }}</p>
+      <span *ngIf="product.isTrending" class="trending-badge">Trending This Week</span>
+      <div class="price-info">
+        <span class="price">₱{{ product.price | number:'1.0-0' }}</span>
+      </div>
+      <div class="rating" *ngIf="product.rating !== undefined">
+        <span *ngFor="let star of [1,2,3,4,5]; let i = index">
+          <i class="fa" [ngClass]="getStarClass(product.rating, i)"></i>
+        </span>
+        <span class="rating-value">{{ product.rating.toFixed(1) }}</span>
+      </div>
+      <button class="add-to-cart-btn" (click)="addToCart(product)">Add to Cart</button>
+      <button class="view-details-btn">View Details</button>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Quick Links -->
+    <div class="footer-column quick-links">
+      <h3>Resources</h3>
+      <ul>
+        <li><a href="#">About HardwareHub</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Information -->
+    <div class="footer-column contact-info">
+      <h3>Contact Information</h3>
+      <ul>
+        <li>📞 +63 912 345 6789</li>
+        <li>✉️ <a href="mailto:support@hardwarehub.com">support&#64;hardwarehub.com</a></li>
+        <li>📍 Maya, Daanbantayan, Cebu</li>
+      </ul>
+    </div>
+
+    <!-- Social Media -->
+    <div class="footer-column social-media">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/HardwareHub" target="_blank" aria-label="Facebook" class="social-icon facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.instagram.com/HardwareHub" target="_blank" aria-label="Instagram" class="social-icon instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@hardwarehubshop" target="_blank" aria-label="TikTok" class="social-icon tiktok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Newsletter Subscription -->
+    <div class="footer-column newsletter">
+      <h3>Subscribe to Our Newsletter</h3>
+      <form action="#" method="POST" class="newsletter-form">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+
+    <!-- Opening Hours -->
+    <div class="footer-column opening-hours">
+      <h3>Opening Hours</h3>
+      <ul>
+        <li>Mon - Fri: 8:00 AM - 5:00 PM</li>
+        <li>Saturday: 9:00 AM - 4:00 PM</li>
+        <li>Sunday: Closed</li>
+      </ul>
+    </div>
+
+    <!-- Payment Methods -->
+    <div class="footer-column payment-methods">
+      <h3>Payment Methods</h3>
+      <img src="gcash-seeklogo.png" alt="GCash Payment" style="width:120px;">
+    </div>
+
+  </div>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top">
+    <a href="#" (click)="scrollToTop($event)">Back to Top</a>
+  </div>
+</footer>

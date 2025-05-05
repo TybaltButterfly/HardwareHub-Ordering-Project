@@ -1,0 +1,46 @@
+<div class="toolbox-wrapper">
+  <div class="top-bar">
+    <button class="back-btn" (click)="goBack()">🡐</button>
+    <h2>My Toolbox</h2>
+  </div>
+
+  <div *ngIf="!isLoggedIn" class="login-prompt">
+    <p>Log in to access your Toolbox.</p>
+    <button (click)="navigateToLogin()" class="login-btn">Log In</button>
+    <button (click)="navigateToRegister()" class="register-btn">Register</button>
+  </div>
+
+  <div *ngIf="isLoggedIn">
+    <div *ngIf="toolboxItems.length === 0" class="empty-state">
+      <img src="assets/toolbox.png" alt="Empty Toolbox" class="empty-image" />
+      <p>“Your Toolbox is empty.”</p>
+      <p>Save tools you like to view and order later.</p>
+      <button (click)="startBrowsing()" class="browse-btn">Start Browsing</button>
+    </div>
+
+    <div *ngIf="toolboxItems.length > 0" class="toolbox-content">
+      <div class="toolbox-controls">
+        <button (click)="clearToolbox()" class="remove-all-btn">Remove All</button>
+        <select [(ngModel)]="sortCriteria" (change)="sortToolbox(sortCriteria)" class="sort-dropdown">
+          <option value="Recent">Sort by Recent</option>
+          <option value="A-Z">Sort A–Z</option>
+          <option value="Category">Sort by Category</option>
+        </select>
+      </div>
+
+      <ul class="toolbox-list">
+        <li *ngFor="let item of toolboxItems" class="toolbox-item">
+          <img [src]="item.thumbnail" alt="{{item.name}}" class="thumbnail" />
+          <div class="item-details">
+            <h3>{{ item.name }}</h3>
+            <p>₱{{ item.price }} <span *ngIf="item.stock > 0" class="in-stock">In Stock</span><span *ngIf="item.stock === 0" class="out-stock">Out of Stock</span></p>
+          </div>
+          <div class="item-actions">
+            <button (click)="addToCart(item)" [disabled]="item.stock === 0" class="add-to-cart-btn">Add to Cart</button>
+            <button (click)="removeItem(item.id)" class="remove-btn">Remove</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
