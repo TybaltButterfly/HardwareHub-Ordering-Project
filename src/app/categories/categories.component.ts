@@ -29,56 +29,56 @@ export class CategoriesComponent implements OnInit {
   categories: Category[] = [
     {
       name: 'Power Tools',
-      image: '/assets/power tools.jpg',
+      image: 'assets/power tools.jpg',
       caption: '100+ items',
       routerLink: '/categories/power-tools',
       altText: 'Power Tools'
     },
     {
       name: 'Hand Tools',
-      image: '/assets/hand-tools.jpg',
+      image: 'assets/hand-tools.jpg',
       caption: 'DIY essentials',
       routerLink: '/categories/hand-tools',
       altText: 'Hand Tools'
     },
     {
       name: 'Electrical Materials',
-      image: '/assets/electrical.jpg',
+      image: 'assets/electrical.jpg',
       caption: 'Wide selection',
       routerLink: '/categories/electrical-materials',
       altText: 'Electrical Materials'
     },
     {
       name: 'Building Materials',
-      image: '/assets/building-materials.jpg',
+      image: 'assets/building-materials.jpg',
       caption: 'Quality supplies',
       routerLink: '/categories/building-materials',
       altText: 'Building Materials'
     },
     {
       name: 'Gardening Tools',
-      image: '/assets/garden-tools.jpg',
+      image: 'assets/garden-tools.jpg',
       caption: 'For your garden',
       routerLink: '/categories/gardening-tools',
       altText: 'Gardening Tools'
     },
     {
       name: 'Paint & Supplies',
-      image: '/assets/painting-supplies.jpg',
+      image: 'assets/painting-supplies.jpg',
       caption: 'Colors and more',
       routerLink: '/categories/paint-supplies',
       altText: 'Paint and Supplies'
     },
   {
       name: 'Plumbing Supplies',
-      image: '/assets/plumbing-tools.jpg',
+      image: 'assets/plumbing-tools.jpg',
       caption: 'Pipes and fittings',
       routerLink: '/categories/plumbing-supplies',
       altText: 'Plumbing Supplies'
     },
     {
       name: 'Safety Tools',
-      image: '/assets/safety-tools.jpg',
+      image: 'assets/safety-tools.jpg',
       caption: 'Protective gear and more',
       routerLink: '/categories/safety-tools',
       altText: 'Safety Tools'

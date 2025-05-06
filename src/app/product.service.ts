@@ -35,7 +35,7 @@ export class ProductService {
       category: 'building-materials',
       dealEndTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       timeLeft: { hours: 0, minutes: 0, seconds: 0 },
-      image: '/assets/Holcim-Excel.jpg'
+      image: 'assets/Holcim-Excel.jpg'
     },
     {
       id: 102,
@@ -46,7 +46,7 @@ export class ProductService {
       category: 'gardening-tools',
       dealEndTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       timeLeft: { hours: 0, minutes: 0, seconds: 0 },
-      image: '/assets/spray gun.webp'
+      image: 'assets/spray gun.webp'
     },
     {
       id: 103,
@@ -57,7 +57,7 @@ export class ProductService {
       category: 'hand-tools',
       dealEndTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       timeLeft: { hours: 0, minutes: 0, seconds: 0 },
-      image: '/assets/wrench.webp'
+      image: 'assets/wrench.webp'
     },
     {
       id: 104,
@@ -68,7 +68,7 @@ export class ProductService {
       category: 'plumbing-supplies',
       dealEndTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       timeLeft: { hours: 0, minutes: 0, seconds: 0 },
-      image: '/assets/kitchenfaucet.jpg'
+      image: 'assets/kitchenfaucet.jpg'
     },
     // New Arrivals Products
     {
@@ -80,7 +80,7 @@ export class ProductService {
       rating: 4.5,
       dateAdded: new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000),
       isTrending: true,
-      image: '/assets/tolsen-drill.webp'
+      image: 'assets/tolsen-drill.webp'
     },
     {
       id: 202,
@@ -90,7 +90,7 @@ export class ProductService {
       category: 'paint-supplies',
       rating: 4.7,
       dateAdded: new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000),
-      image: '/assets/bosch-paint-sprayer.jpg'
+      image: 'assets/bosch-paint-sprayer.jpg'
     },
     {
       id: 203,
@@ -100,7 +100,7 @@ export class ProductService {
       category: 'power-tools',
       rating: 4.3,
       dateAdded: new Date(new Date().getTime() - 3 * 24 * 60 * 60 * 1000),
-      image: '/assets/makita-grinder.jpg'
+      image: 'assets/makita-grinder.jpg'
     },
     {
       id: 204,
@@ -110,7 +110,7 @@ export class ProductService {
       category: 'safety-tools',
       rating: 4.5,
       dateAdded: new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000),
-      image: '/assets/dewalt-glasses.webp'
+      image: 'assets/dewalt-glasses.webp'
     },
     {
       id: 205,
@@ -120,7 +120,7 @@ export class ProductService {
       category: 'hand-tools',
       rating: 4.4,
       dateAdded: new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000),
-      image: '/assets/stanley-hammer.webp'
+      image: 'assets/stanley-hammer.webp'
     },
     {
       id: 206,
@@ -131,7 +131,7 @@ export class ProductService {
       rating: 4.6,
       dateAdded: new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000),
       isTrending: true,
-      image: '/assets/bosch-screwdriver.webp'
+      image: 'assets/bosch-screwdriver.webp'
     }
   ];
 
