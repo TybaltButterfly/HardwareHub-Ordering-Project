@@ -20,11 +20,11 @@ export interface Product {
 })
 export class ProductService {
   private products: Product[] = [
-    { id: 1, name: 'Power Drill', description: 'Cordless power drill', price: 99.99, category: 'power-tools', image: '/power tools.jpg' },
-    { id: 2, name: 'Hammer', description: 'Steel claw hammer', price: 19.99, category: 'hand-tools', image: '/stanley-hammer.webp' },
-    { id: 3, name: 'Screwdriver Set', description: 'Set of 6 screwdrivers', price: 29.99, category: 'hand-tools', image: '/bosch-screwdriver.webp' },
-    { id: 4, name: 'Electric Sander', description: 'Orbital electric sander', price: 49.99, category: 'power-tools', image: '/power tools.jpg' },
-    { id: 5, name: 'Paint Brush', description: '3-inch paint brush', price: 5.99, category: 'paint-supplies', image: '/spray gun.webp' },
+    { id: 1, name: 'Power Drill', description: 'Cordless power drill', price: 99.99, category: 'power-tools', image: '/assets/power tools.jpg' },
+    { id: 2, name: 'Hammer', description: 'Steel claw hammer', price: 19.99, category: 'hand-tools', image: '/assets/stanley-hammer.webp' },
+    { id: 3, name: 'Screwdriver Set', description: 'Set of 6 screwdrivers', price: 29.99, category: 'hand-tools', image: '/assets/bosch-screwdriver.webp' },
+    { id: 4, name: 'Electric Sander', description: 'Orbital electric sander', price: 49.99, category: 'power-tools', image: '/assets/power tools.jpg' },
+    { id: 5, name: 'Paint Brush', description: '3-inch paint brush', price: 5.99, category: 'paint-supplies', image: '/assets/spray gun.webp' },
     // Flash Sales Products
     {
       id: 101,
@@ -35,7 +35,7 @@ export class ProductService {
       category: 'building-materials',
       dealEndTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       timeLeft: { hours: 0, minutes: 0, seconds: 0 },
-      image: '/Holcim-Excel.jpg'
+      image: '/assets/Holcim-Excel.jpg'
     },
     {
       id: 102,
@@ -46,7 +46,7 @@ export class ProductService {
       category: 'gardening-tools',
       dealEndTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       timeLeft: { hours: 0, minutes: 0, seconds: 0 },
-      image: '/spray gun.webp'
+      image: '/assets/spray gun.webp'
     },
     {
       id: 103,
@@ -57,7 +57,7 @@ export class ProductService {
       category: 'hand-tools',
       dealEndTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       timeLeft: { hours: 0, minutes: 0, seconds: 0 },
-      image: '/wrench.webp'
+      image: '/assets/wrench.webp'
     },
     {
       id: 104,
@@ -68,7 +68,7 @@ export class ProductService {
       category: 'plumbing-supplies',
       dealEndTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       timeLeft: { hours: 0, minutes: 0, seconds: 0 },
-      image: '/kitchenfaucet.jpg'
+      image: '/assets/kitchenfaucet.jpg'
     },
     // New Arrivals Products
     {
@@ -80,7 +80,7 @@ export class ProductService {
       rating: 4.5,
       dateAdded: new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000),
       isTrending: true,
-      image: '/tolsen-drill.webp'
+      image: '/assets/tolsen-drill.webp'
     },
     {
       id: 202,
@@ -90,7 +90,7 @@ export class ProductService {
       category: 'paint-supplies',
       rating: 4.7,
       dateAdded: new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000),
-      image: '/bosch-paint-sprayer.jpg'
+      image: '/assets/bosch-paint-sprayer.jpg'
     },
     {
       id: 203,
@@ -100,7 +100,7 @@ export class ProductService {
       category: 'power-tools',
       rating: 4.3,
       dateAdded: new Date(new Date().getTime() - 3 * 24 * 60 * 60 * 1000),
-      image: '/makita-grinder.jpg'
+      image: '/assets/makita-grinder.jpg'
     },
     {
       id: 204,
@@ -110,7 +110,7 @@ export class ProductService {
       category: 'safety-tools',
       rating: 4.5,
       dateAdded: new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000),
-      image: '/dewalt-glasses.webp'
+      image: '/assets/dewalt-glasses.webp'
     },
     {
       id: 205,
@@ -120,7 +120,7 @@ export class ProductService {
       category: 'hand-tools',
       rating: 4.4,
       dateAdded: new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000),
-      image: '/stanley-hammer.webp'
+      image: '/assets/stanley-hammer.webp'
     },
     {
       id: 206,
@@ -131,7 +131,7 @@ export class ProductService {
       rating: 4.6,
       dateAdded: new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000),
       isTrending: true,
-      image: '/bosch-screwdriver.webp'
+      image: '/assets/bosch-screwdriver.webp'
     }
   ];
 

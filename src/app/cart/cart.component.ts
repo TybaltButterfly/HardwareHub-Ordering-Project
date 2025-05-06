@@ -42,7 +42,7 @@ export class CartComponent {
         {
           id: 1,
           name: 'Davies Paint 4 Liters White Latex Semi-Gloss',
-          thumbnail:'/daviespaint.webp',
+          thumbnail:'/assets/daviespaint.webp',
           price: 560,
           quantity: 1,
           stock: 5,
@@ -51,7 +51,7 @@ export class CartComponent {
         {
           id: 2,
           name: 'Tolsen Trowel',
-          thumbnail: 'tolsen trowel.webp',
+          thumbnail: '/assets/tolsen trowel.webp',
           price: 1190,
           quantity: 1,
           stock: 3,

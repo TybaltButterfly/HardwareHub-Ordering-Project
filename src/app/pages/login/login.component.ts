@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
 
   showPassword = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -61,6 +62,12 @@ export class LoginComponent {
         name: user.username,
         email: user.email
       }));
+
+      // Update userService with new user info
+      this.userService.updateUser({
+        name: user.username,
+        email: user.email
+      });
     
       this.router.navigate(['/home']);
     } else {

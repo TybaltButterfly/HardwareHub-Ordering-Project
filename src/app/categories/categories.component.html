@@ -38,7 +38,7 @@
         [attr.aria-label]="category.name + ' category, ' + (category.caption ? category.caption : '')"
       >
         <img
-          [src]="'/' + category.image"
+          [src]="category.image"
           alt="{{ category.altText }}"
           class="category-image"
           loading="lazy"

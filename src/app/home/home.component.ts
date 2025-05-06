@@ -29,27 +29,27 @@ export class HomeComponent implements OnInit, OnDestroy {
     {
       name: 'Power Tools',
       caption: 'For Heavy-Duty Work',
-      image: '/power tools.jpg',
+      image: '/assets/power tools.jpg',
       route: '/categories/power-tools',
       isHot: true
     },
     {
       name: 'Hand Tools',
       caption: 'DIY Must-Haves',
-      image: '/hand tools.jpg',
+      image: '/assets/hand-tools.jpg',
       route: '/categories/hand-tools'
     },
     {
       name: 'Electrical Materials',
       caption: 'Wiring & Essentials',
-      image: '/electrical.jpg',
+      image: '/assets/electrical.jpg',
       route: '/categories/electrical-materials',
       isHot: true
     },
     {
       name: 'Plumbing Supplies',
       caption: 'Leak-Free Solutions',
-      image: '/plumbing-tools.jpg',
+      image: '/assets/plumbing-tools.jpg',
       route: '/categories/plumbing-supplies'
     }
   ];

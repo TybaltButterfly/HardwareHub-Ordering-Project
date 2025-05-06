@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-signup',
@@ -28,7 +29,7 @@ export class SignupComponent {
   showPassword = false;
   showConfirmPassword = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -104,11 +105,13 @@ export class SignupComponent {
 
     const existingCurrentUser = localStorage.getItem('currentUser');
     if (!existingCurrentUser) {
-      localStorage.setItem('currentUser', JSON.stringify({
+      const newUser = {
         name: this.username,
         email: this.email,
         phoneNumber: this.phoneNumber
-      }));
+      };
+      localStorage.setItem('currentUser', JSON.stringify(newUser));
+      this.userService.updateUser(newUser);
     }
     this.router.navigate(['/signup-complete']);
   }
