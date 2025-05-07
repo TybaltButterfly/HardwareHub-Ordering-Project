@@ -1,0 +1,25 @@
+<div class="splash-wrapper">
+    <div class="splash-overlay">
+<img src="assets/toolbox.png" alt="HardwareHub Logo" class="splash-logo" />
+    
+      <h1 class="app-name">HardwareHub</h1>
+  
+      <div class="button-toggle">
+        <button class="toggle-btn active" (click)="goToLogin()">Login</button>
+        <button class="toggle-btn" (click)="goToSignUp()">Sign Up</button>
+      </div>      
+
+      <!-- Role selection popup -->
+      <div *ngIf="showRolePopup" class="role-popup-overlay">
+        <div class="role-popup">
+          <h3>Select Role</h3>
+          <button class="role-btn" (click)="selectRole('admin')">Admin</button>
+          <button class="role-btn" (click)="selectRole('user')">User</button>
+          <button class="close-btn" aria-label="Close" (click)="cancelRoleSelection()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+

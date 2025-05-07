@@ -43,6 +43,7 @@ html, body {
 }
 
 .login-card, .signup-card {
+    position: relative;
     background-color: #e6f7f4;
     padding: 40px 30px;
     max-width: 400px;
@@ -51,6 +52,22 @@ html, body {
     text-align: center;
     color: #044f48;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.close-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-dark);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.close-icon:hover {
+  color: #555;
 }
 
 .login-image, .signup-image {

@@ -1,0 +1,136 @@
+/* Admin Login Component CSS */
+
+.login-wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2ec4b6;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: var(--primary-font);
+    font-weight: 400;
+}
+
+.login-card {
+    position: relative;
+    background-color: var(--primary-light);
+    padding: 40px 30px;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 20px;
+    text-align: center;
+    color: var(--primary-dark);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.welcome-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #044f48;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+  
+.input-group input {
+    width: 100%;
+    padding: 12px 38px 12px 38px; 
+    height: 45px; 
+    line-height: 21px; 
+    border: 1px solid #b2e0d9;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #044f48;
+    background-color: #ffffff;
+    box-sizing: border-box;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 12px;
+    top: 60%;
+    transform: translateY(-1%);
+    color: #7abfb3;
+    font-size: 16px;
+    height: 16px;
+    pointer-events: none;
+  }
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 60%;
+    transform: translateY(-1%);
+    color: #7abfb3;
+    font-size: 16px;
+    cursor: pointer;
+}
+  
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin: 5px 0 10px 0;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #f76c6c;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #e75959;
+}
+
+/* Responsive styles for admin login component */
+@media (max-width: 768px) {
+    .login-wrapper {
+        padding: 10px;
+    }
+    .login-card {
+        padding: 30px 20px;
+        max-width: 100%;
+    }
+    .welcome-text {
+        font-size: 20px;
+    }
+    .login-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-wrapper {
+        padding: 5px;
+    }
+    .login-card {
+        padding: 20px 15px;
+    }
+    .welcome-text {
+        font-size: 18px;
+    }
+    .login-btn {
+        font-size: 12px;
+        padding: 8px;
+    }
+}
