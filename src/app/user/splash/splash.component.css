@@ -1,8 +1,6 @@
 /* Fullscreen background with centered splash content */
 .splash-wrapper {
     height: 100vh;
-    background: url('/assets/background.jpg') no-repeat center center;
-    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;

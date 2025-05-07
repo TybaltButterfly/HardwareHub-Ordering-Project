@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class SplashComponent {
   showRolePopup: boolean = false;
+  backgroundImage = 'assets/background.jpg';
 
   constructor(private router: Router) {}
 
