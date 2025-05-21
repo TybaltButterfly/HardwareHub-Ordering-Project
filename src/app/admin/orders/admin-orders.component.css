@@ -1,0 +1,240 @@
+/* === General Layout === */
+* {
+  font-family: var(--primary-font);
+}
+.container {
+  max-width: 800px; 
+  margin: 20px auto; 
+  padding: 50px 30px;
+  font-family: var(--primary-font, 'Poppins', sans-serif);
+  color: var(--text-primary, #333);
+  background-color: var(--primary-light, #f9f9f9);
+}
+.orders-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  justify-items: center;
+}
+
+/* === Back Button === */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-dark);
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 6px 10px;
+  margin-left: 10px;
+  margin-top: 20px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.back-btn i {
+  font-size: 1.5rem;
+}
+
+.back-btn:hover {
+  background-color: var(--white);
+}
+
+/* === Tabs === */
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+}
+
+.tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 3px;
+}
+
+.tabs button {
+  background-color: var(--primary-light, #edf3ed);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  color: var(--text-primary, #333);
+  font-size: 1rem;
+  /* Removed box-shadow inset border */
+}
+
+.tabs button.active,
+.tabs button:hover,
+.tabs button:focus-visible {
+  background-color: var(--primary-color, #22c7a9);
+  color: var(--neutral-light, #fff);
+  box-shadow: none;
+  outline: none;
+}
+
+/* === Order Card === */
+.order-card {
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 0 auto 24px auto;         /* Center and add bottom space */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  background-color: var(--neutral-light, #fff);
+  max-width: 400px;                 /* Limit width for square-like shape */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.order-card:hover,
+.order-card:focus-within {
+  transform: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+/* === Status Badge === */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: var(--neutral-light, #fff);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  display: inline-block;
+  text-align: center;
+  max-width: fit-content;
+}
+
+.status-badge.pending {
+  background-color: #ffc107; /* yellow */
+  color: #212529;
+}
+
+.status-badge.processing {
+  background-color: #fd7e14; /* orange */
+}
+
+.status-badge.shipped {
+  background-color: var(--primary-color, #22c7a9);
+}
+
+.status-badge.cancelled {
+  background-color: #dc3545; /* red */
+}
+
+/* === Action Buttons === */
+.actions {
+  display: flex;
+  flex-wrap: nowrap;        /* Prevent wrapping */
+  gap: 14px;
+  margin-top: 16px;
+  justify-content: center;  /* Center buttons horizontally */
+  align-items: center;      /* Vertically center buttons */
+  overflow-x: auto;         /* Allow horizontal scroll if overflow */
+  padding-bottom: 8px;      /* Optional: some space below for scrollbar */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+button {
+  background-color: var(--primary-color, #22c7a9);
+  color: var(--neutral-light, #fff);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 5px; /* adjusted from 8px to 5px */
+  font-size: 0.95rem; /* adjusted font size */
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: auto;
+  max-width: 180px;
+  text-align: center;
+  box-shadow: none; /* removed shadow for simpler style */
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+button:hover,
+button:focus-visible {
+  background-color: var(--primary-dark, #1aa18c);
+  outline: none;
+  box-shadow: none;
+  transform: none;
+}
+
+/* === Inputs === */
+input[type="text"] {
+  padding: 12px 16px;
+  border: 1.5px solid var(--border-color, #ccc);
+  border-radius: 6px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 320px;
+  font-family: inherit;
+  color: var(--text-primary, #444);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="text"]:focus-visible {
+  outline: none;
+  border-color: var(--primary-color, #22c7a9);
+  box-shadow: 0 0 8px rgba(34, 199, 169, 0.4);
+}
+
+/* === Responsive === */
+@media screen and (max-width: 768px) {
+  .tabs {
+    flex-direction: row; /* keep row for space-around */
+    gap: 10px;
+  }
+
+  .order-card {
+    padding: 16px;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  button {
+    width: 100%;            /* Full width on mobile */
+    max-width: none;
+  }
+
+  input[type="text"] {
+    max-width: 100%;
+    margin-bottom: 12px;
+  }
+}
+
+/* === Accessibility Improvements === */
+/* Add focus-visible outline for keyboard users */
+.back-btn:focus-visible,
+.tabs button:focus-visible,
+button:focus-visible,
+input[type="text"]:focus-visible {
+  outline: 2px solid var(--primary-color, #22c7a9);
+  outline-offset: 2px;
+}

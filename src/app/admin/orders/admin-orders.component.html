@@ -1,0 +1,93 @@
+<div class="back-button-container">
+  <button class="back-btn" (click)="goBack()">
+    <i class="fas fa-arrow-left"></i></button>
+</div>
+<div class="tabs">
+  <button [class.active]="activeTab === 'Pending'" (click)="activeTab = 'Pending'">Pending</button>
+  <button [class.active]="activeTab === 'Processing'" (click)="activeTab = 'Processing'">Processing</button>
+  <button [class.active]="activeTab === 'Shipped'" (click)="activeTab = 'Shipped'">Shipped</button>
+  <button [class.active]="activeTab === 'Delivered'" (click)="activeTab = 'Delivered'">Delivered</button>
+  <button [class.active]="activeTab === 'Cancelled'" (click)="activeTab = 'Cancelled'">Cancelled</button>
+</div>
+
+<div class="orders-list">
+  <ng-container *ngIf="activeTab === 'Pending'">
+    <div *ngIf="pendingOrders.length === 0" class="no-pending-message">
+      No pending orders.
+    </div>
+    <div *ngFor="let order of pendingOrders" class="order-card">
+      <strong>Order #{{ order.orderId }}</strong><br />
+      {{ getOrderSummary(order) }}<br />
+      <span><strong>Payment Method:</strong> {{ order.paymentMethod || 'N/A' }}</span><br />
+      <span><strong>Total Price:</strong> ₱{{ order.totalPrice || 'N/A' }}</span><br />
+      <div class="actions">
+      <button (click)="markAsProcessing(order.orderId)">Mark as Processing</button>
+      <button (click)="cancelOrder(order.orderId)">Cancel</button>
+      <button (click)="viewOrderDetails(order.orderId)">View</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab === 'Processing'">
+    <div *ngIf="processingOrders.length === 0" class="no-pending-message">
+      No processing orders.
+    </div>
+    <div *ngFor="let order of processingOrders" class="order-card">
+      <strong>Order #{{ order.orderId }}</strong><br />
+      {{ getOrderSummary(order) }}<br />
+      <span><strong>Payment Method:</strong> {{ order.paymentMethod || 'N/A' }}</span><br />
+      <span><strong>Total Price:</strong> ₱{{ order.totalPrice || 'N/A' }}</span><br />
+      <div class="actions">
+      <button (click)="markAsShipped(order.orderId)">Mark as Shipped</button>
+      <button (click)="viewOrderDetails(order.orderId)">View</button>
+    </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab === 'Shipped'">
+    <div *ngIf="shippedOrders.length === 0" class="no-pending-message">
+      No shipped orders.
+    </div>
+    <div *ngFor="let order of shippedOrders" class="order-card">
+      <strong>Order #{{ order.orderId }}</strong><br />
+      {{ getOrderSummary(order) }}<br />
+      <span><strong>Payment Method:</strong> {{ order.paymentMethod || 'N/A' }}</span><br />
+      <span><strong>Total Price:</strong> ₱{{ order.totalPrice || 'N/A' }}</span><br />
+      <div class="actions">
+      <button (click)="markAsDelivered(order.orderId)">Mark as Delivered</button>
+      <button (click)="viewOrderDetails(order.orderId)">View</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab === 'Delivered'">
+    <div *ngIf="deliveredOrders.length === 0" class="no-pending-message">
+      No delivered orders.
+    </div>
+    <div *ngFor="let order of deliveredOrders" class="order-card">
+      <strong>Order #{{ order.orderId }}</strong><br />
+      {{ getOrderSummary(order) }}<br />
+      <span><strong>Payment Method:</strong> {{ order.paymentMethod || 'N/A' }}</span><br />
+      <span><strong>Total Price:</strong> ₱{{ order.totalPrice || 'N/A' }}</span><br />
+      <div class="actions">
+      <button (click)="viewOrderDetails(order.orderId)">View</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab === 'Cancelled'">
+    <div *ngIf="cancelledOrders.length === 0" class="no-pending-message">
+      No cancelled orders.
+    </div>
+    <div *ngFor="let order of cancelledOrders" class="order-card">
+      <strong>Order #{{ order.orderId }}</strong><br />
+      {{ getOrderSummary(order) }}<br />
+      <span><strong>Payment Method:</strong> {{ order.paymentMethod || 'N/A' }}</span><br />
+      <span><strong>Total Price:</strong> ₱{{ order.totalPrice || 'N/A' }}</span><br />
+      <div class="actions">
+      <button (click)="deleteOrder(order.orderId)">Delete</button>
+      <button (click)="viewOrderDetails(order.orderId)">View</button>
+      </div>
+    </div>
+  </ng-container>
+</div>

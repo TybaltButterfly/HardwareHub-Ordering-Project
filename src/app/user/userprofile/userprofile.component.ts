@@ -18,6 +18,12 @@ export class UserprofileComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.userService.getUser();
+
+    // Load profile picture from localStorage if available
+    const storedProfilePicture = localStorage.getItem('profilePicture');
+    if (storedProfilePicture !== null) {
+      this.user.profilePicture = storedProfilePicture;
+    }
   }
   
 
@@ -26,7 +32,10 @@ export class UserprofileComponent implements OnInit {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.user.profilePicture = e.target.result;
+        this.user.profilePicture = e.target.result as string;
+
+        // Save profile picture to localStorage
+        localStorage.setItem('profilePicture', this.user.profilePicture);
       };
       reader.readAsDataURL(file);
     }
@@ -34,6 +43,12 @@ export class UserprofileComponent implements OnInit {
 
   saveProfile() {
     this.userService.updateUser(this.user);
+
+    // Save profile picture to localStorage on save as well
+    if (this.user.profilePicture) {
+      localStorage.setItem('profilePicture', this.user.profilePicture);
+    }
+
     alert('Profile saved successfully!');
     window.location.reload();
   }

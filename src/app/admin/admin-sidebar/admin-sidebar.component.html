@@ -1,0 +1,18 @@
+<nav [class.collapsed]="isCollapsed" class="sidebar">
+  <button class="toggle-btn" (click)="toggleSidebar()" aria-label="Toggle Sidebar">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <ul class="menu-sections">
+    <li *ngFor="let section of menuSections" class="menu-section">
+      <div class="section-title">
+        <i [class]="section.icon"></i>
+        <span class="section-label" *ngIf="!isCollapsed">{{ section.title }}</span>
+      </div>
+      <ul class="section-links" *ngIf="!isCollapsed">
+        <li *ngFor="let link of section.links">
+          <a [routerLink]="link.route">{{ link.label }}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>

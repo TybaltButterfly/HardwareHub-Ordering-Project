@@ -1,0 +1,108 @@
+* {
+  font-family: var(--primary-font); 
+}
+.admin-order-details-container {
+  max-width: 700px;
+  width: 100%;    
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-sizing: border-box;         
+  overflow: visible;        
+}
+
+.admin-order-details-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-order-details-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.admin-order-details-container li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-order-details-container select {
+  padding: 4px;
+  margin-left: 10px;
+}
+
+.admin-order-details-container button {
+  padding: 8px 14px;
+  background-color: var(--primary-color);
+  border: none;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-order-details-container button:hover {
+  background-color: var(--primary-dark);
+}
+
+.order-items {
+  list-style: none;
+  padding: 5px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-items li {
+  padding-left: 12px; 
+}
+
+.order-item {
+  background-color: #fdfdfd;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  font-size: 15px;
+  color: #444;
+  line-height: 1.5;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  color: var(--primary-dark, #333);
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(255, 167, 38, 0.3);
+}
+
+button {
+  margin-top: 16px;
+}

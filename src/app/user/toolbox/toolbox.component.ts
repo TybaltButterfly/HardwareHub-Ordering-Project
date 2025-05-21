@@ -58,6 +58,8 @@ export class ToolboxComponent implements OnInit {
       stock: item.stock,
       subtotal: item.price * 1
     });
+    this.toolboxService.removeItem(item.id);
+    alert(`${item.name} has been added to the cart.`);
   }
 
   sortToolbox(criteria: string): void {

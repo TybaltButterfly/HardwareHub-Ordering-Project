@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ViewEncapsulation } from '@angular/core';
 import { CartService, CartItem } from '../../cart.service';
 import { ToolboxService } from '../toolbox/toolbox.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -18,6 +19,7 @@ import { ToolboxService } from '../toolbox/toolbox.service';
 export class CartComponent {
   @ViewChild('emptyCart', { static: true }) emptyCart!: TemplateRef<any>;
 
+  cartItems$: Observable<CartItem[]>;
   cartItems: CartItem[] = [];
 
   couponCode: string = '';
@@ -29,35 +31,22 @@ export class CartComponent {
   // Track selected item ids
   selectedItems: Set<number> = new Set();
 
+  private cartItemsSubscription: Subscription | undefined;
+
   constructor(private router: Router, private cartService: CartService, private toolboxService: ToolboxService) {
-    this.cartService.cartItems$.subscribe(items => {
+    this.cartItems$ = this.cartService.cartItems$;
+  }
+
+  ngOnInit(): void {
+    this.cartItemsSubscription = this.cartItems$.subscribe((items: CartItem[]) => {
+      console.log('Cart items updated:', items);
       this.cartItems = items;
     });
   }
 
-  ngOnInit(): void {
-    // Initialize with some items for demo or load from service
-    if (this.cartService.getCartItems().length === 0) {
-      this.cartService.setCartItems([
-        {
-          id: 1,
-          name: 'Davies Paint 4 Liters White Latex Semi-Gloss',
-          thumbnail:'/assets/daviespaint.webp',
-          price: 560,
-          quantity: 1,
-          stock: 5,
-          subtotal: 560,
-        },
-        {
-          id: 2,
-          name: 'Tolsen Trowel',
-          thumbnail: '/assets/tolsen trowel.webp',
-          price: 1190,
-          quantity: 1,
-          stock: 3,
-          subtotal: 1190,
-        },
-      ]);
+  ngOnDestroy(): void {
+    if (this.cartItemsSubscription) {
+      this.cartItemsSubscription.unsubscribe();
     }
   }
 
@@ -191,6 +180,8 @@ export class CartComponent {
 
   proceedToCheckout(): void {
     if (this.hasSelectedItems) {
+      // Set selected items in cart service before navigating
+      this.cartService.setSelectedItemIds(this.selectedItems);
       this.router.navigate(['/checkout']);
     }
   }

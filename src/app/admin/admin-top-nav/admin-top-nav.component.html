@@ -1,0 +1,30 @@
+<header class="top-nav">
+  <div class="logo-section">
+    <img src="assets/toolbox.png" alt="Store Logo" class="store-logo" />
+    <span class="admin-label">Admin Panel</span>
+  </div>
+  <div class="nav-actions">
+    <div *ngIf="showNotifications" class="notification-bell" tabindex="0" aria-label="Notifications" (click)="toggleNotificationDropdown()">
+      <i class="fa-solid fa-bell bell-icon"></i>
+      <span class="notification-count" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+      <div class="notification-dropdown" *ngIf="isNotificationDropdownOpen && notifications.length > 0">
+        <button class="mark-all-btn" (click)="markAllAsRead(); $event.stopPropagation()">Mark all as read</button>
+        <ul>
+          <li *ngFor="let notification of notifications" 
+              [class.unread]="!notification.read"
+              (click)="markAsRead(notification)">
+            {{ notification.message }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="profile" tabindex="0" aria-label="Admin Profile" (click)="goToProfileSecurity()">
+      <img *ngIf="profilePhotoUrl; else defaultIcon" [src]="profilePhotoUrl" alt="Profile Photo" class="profile-photo" />
+      <ng-template #defaultIcon>
+        <i class="fa-solid fa-user profile-icon"></i>
+      </ng-template>
+      <span class="admin-name">{{ adminName }}</span>
+      <button class="logout-btn" (click)="logout(); $event.stopPropagation()" aria-label="Logout">Logout</button>
+    </div>
+  </div>
+</header>

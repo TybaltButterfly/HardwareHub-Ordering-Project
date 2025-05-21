@@ -1,0 +1,37 @@
+<div class="admin-order-details-container" *ngIf="order">
+  <button class="back-btn" (click)="goBack()"><i class="fas fa-arrow-left"></i></button>
+  <h2>Order Details - {{order.orderId}}</h2>
+  <p><strong>User Name:</strong> {{order.userName}}</p>
+  <p><strong>Contact Number:</strong> {{order.billingDetails?.phone || 'Not provided'}}</p>
+  <p><strong>Status:</strong> {{order.status}}</p>
+  <p><strong>Order Date:</strong> {{order.orderDate | date:'medium'}}</p>
+  <p><strong>Delivery Date:</strong> {{order.deliveryDate | date:'mediumDate'}}</p>
+  <p><strong>Estimated Delivery:</strong> {{order.estimatedDelivery || 'N/A'}}</p>
+  <p><strong>Tracking Number:</strong> {{order.trackingNumber || 'N/A'}}</p>
+  <p><strong>Shipping Address:</strong>
+    <span *ngIf="order.shippingDetails; else billingAddress">
+      {{filterTruthy([order.shippingDetails.street1, order.shippingDetails.street2, order.shippingDetails.barangay, order.shippingDetails.town, order.shippingDetails.city, order.shippingDetails.zip]).join(', ')}}
+    </span>
+    <ng-template #billingAddress>
+      {{filterTruthy([order.billingDetails?.street1, order.billingDetails?.street2, order.billingDetails?.barangay, order.billingDetails?.town, order.billingDetails?.city, order.billingDetails?.zip]).join(', ')}}
+    </ng-template>
+  </p>
+  <h3>Products:</h3>
+<ul class="order-items">
+  <li *ngFor="let item of order.items" class="order-item">
+    <div><strong>{{ item.name }}</strong></div>
+    <div>Quantity: {{ item.quantity }}</div>
+    <div>Price: ₱{{ item.price }}</div>
+    <div>Subtotal: ₱{{ item.subtotal }}</div>
+  </li>
+</ul>
+  <p><strong>Total Price:</strong> ₱{{order.totalPrice}}</p>
+  <h3>Payment Information</h3>
+  <p><strong>Payment Method:</strong> {{order.paymentMethod || 'Not available'}}</p>
+  <h3>Order History</h3>
+  <ul>
+    <li *ngFor="let history of order.history || []">
+      {{history.date | date:'medium'}} - {{history.status}} - {{history.note || ''}}
+    </li>
+  </ul>
+</div>

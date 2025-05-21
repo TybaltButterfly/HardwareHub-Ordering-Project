@@ -64,16 +64,16 @@
     </div>
 
     <div *ngIf="categoryName" class="product-list" role="list">
-    <div *ngFor="let product of filteredProducts" class="product-card category-card" role="listitem" tabindex="0">
+<a *ngFor="let product of filteredProducts" [routerLink]="['/product-details', product.id]" class="product-card category-card" role="listitem" tabindex="0" [attr.aria-label]="product.name + ' product'">
         <h3 class="product-name">{{ product.name }}</h3>
         <p class="product-description">{{ product.description }}</p>
-  <p class="product-price">₱{{ product.price.toFixed(2) }}</p>
-      </div>
+        <p class="product-price">₱{{ product.price.toFixed(2) }}</p>
+      </a>
       <p *ngIf="filteredProducts.length === 0">No products found.</p>
     </div>
 
     <div *ngIf="!categoryName" class="view-all-products">
-      <a routerLink="/products" class="btn btn-primary" aria-label="View all products">
+      <a [routerLink]="['/products']" [queryParams]="{ mode: 'all' }" class="btn btn-primary" aria-label="View all products">
         View All Products
       </a>
     </div>

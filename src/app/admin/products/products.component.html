@@ -1,1 +1,185 @@
-<p>products works!</p>
+<div class="page-container">
+<div class="top-nav">
+  <button class="btn btn-primary back-btn" (click)="back()"><i class="fas fa-arrow-left"></i></button>
+  <h1><i class="fas fa-box"></i> Product List</h1>
+  <div class="actions">
+    <button class="btn btn-primary" (click)="addNewProduct()"><i class="fas fa-plus"></i> Add Product</button>
+    <input
+      type="text"
+      placeholder="Search: Name or SKU"
+      [(ngModel)]="searchQuery"
+      (input)="applyFilters()"
+      class="search-input"
+    />
+    <select [(ngModel)]="filterCategory" (change)="applyFilters()" class="filter-select">
+      <option value="">All Categories</option>
+      <option *ngFor="let category of categories; let i = index" [value]="categoryValues[i]">{{ category }}</option>
+    </select>
+    <select [(ngModel)]="filterStatus" (change)="applyFilters()" class="filter-select">
+      <option value="">All Statuses</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+      <option value="out-of-stock">Out of Stock</option>
+    </select>
+    <select [(ngModel)]="sortColumn" (change)="applyFilters()" class="filter-select">
+      <option value="name">Sort by Name</option>
+      <option value="price">Sort by Price</option>
+      <option value="stock">Sort by Stock</option>
+      <option value="lastUpdated">Sort by Last Updated</option>
+    </select>
+    <select [(ngModel)]="sortDirection" (change)="applyFilters()" class="filter-select">
+      <option value="asc">Ascending</option>
+      <option value="desc">Descending</option>
+    </select>
+  </div>
+</div>
+
+<div class="bulk-actions" *ngIf="selectedProductIds.size > 0">
+  <button class="btn btn-danger" (click)="deleteSelected()"><i class="fas fa-trash"></i> Delete Selected</button>
+  <button class="btn btn-primary" (click)="changeStatusSelected(true)"><i class="fas fa-check-circle"></i> Activate Selected</button>
+  <button class="btn btn-primary" (click)="changeStatusSelected(false)"><i class="fas fa-times-circle"></i> Deactivate Selected</button>
+  <select #categorySelect class="filter-select">
+    <option value="" disabled selected>Move to Category</option>
+    <option *ngFor="let category of categories; let i = index" [value]="categoryValues[i]">{{ category }}</option>
+  </select>
+  <button class="btn btn-primary" (click)="moveCategorySelected(categorySelect.value)">Move</button>
+</div>
+
+<!-- Desktop Table View -->
+<table class="product-table" *ngIf="!isMobileView()">
+  <thead>
+    <tr>
+      <th><input type="checkbox" [checked]="areAllSelected()" (change)="selectAll($any($event.target).checked)" /></th>
+      <th>Image</th>
+      <th (click)="changeSort('sku')">SKU</th>
+      <th (click)="changeSort('name')">Name</th>
+      <th (click)="changeSort('category')">Category</th>
+      <th (click)="changeSort('price')">Price</th>
+      <th (click)="changeSort('stock')">Stock</th>
+      <th>Status</th>
+      <th (click)="changeSort('lastUpdated')">Last Updated</th>
+      <th>Badges</th>
+      <th>Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of pagedProducts">
+      <td><input type="checkbox" [checked]="isSelected(product.id)" (change)="toggleSelectProduct(product.id)" /></td>
+      <td><img [src]="product.image" alt="{{product.name}}" class="product-image" /></td>
+      <td>{{ product.sku }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.category }}</td>
+      <td>{{ product.price | currency:'PHP':'symbol':'1.2-2' }}</td>
+      <td [class.low-stock]="product.stock <= 5">{{ product.stock }}</td>
+      <td>
+        <select [(ngModel)]="product.status" (change)="onStatusChange(product)" class="status-select">
+          <option [ngValue]="true">Active</option>
+          <option [ngValue]="false">Inactive</option>
+          <option [ngValue]="null">Out of Stock</option>
+        </select>
+      </td>
+      <td>{{ product.lastUpdated | date:'mediumDate' }}</td>
+      <td>
+        <select [(ngModel)]="product.badgeSelection" (change)="onBadgeChange(product)" class="badge-dropdown">
+          <option value="none">None</option>
+          <option value="new">New</option>
+          <option value="promo">Promo</option>
+          <option value="trending">Trending</option>
+        </select>
+        <span *ngIf="product.stock === 0" class="badge out-of-stock-badge"><i class="fas fa-ban"></i> Out of Stock</span>
+      </td>
+      <td><button class="btn btn-primary" (click)="editProduct(product)"><i class="fas fa-edit"></i> Edit</button></td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+<!-- Mobile Card View -->
+<div class="mobile-card" *ngIf="isMobileView()">
+  <div *ngFor="let product of pagedProducts" class="product-card">
+    <img [src]="product.image" alt="{{product.name}}" class="product-image" />
+    <div class="product-info">
+      <h3>{{ product.name }}</h3>
+      <p><strong>SKU:</strong> {{ product.sku }}</p>
+      <p><strong>Category:</strong> {{ product.category }}</p>
+      <p><strong>Price:</strong> {{ product.price | currency:'PHP':'symbol':'1.2-2' }}</p>
+      <p [class.low-stock]="product.stock <= 5"><strong>Stock:</strong> {{ product.stock }}</p>
+      <p>
+        <strong>Status:</strong>
+        <span [class.active-status]="product.status" [class.inactive-status]="!product.status">
+          {{ product.status ? 'Active' : 'Inactive' }}
+        </span>
+      </p>
+      <p><strong>Last Updated:</strong> {{ product.lastUpdated | date:'mediumDate' }}</p>
+      <div class="badges">
+        <span *ngIf="product.isNew" class="badge new-badge">New</span>
+        <span *ngIf="product.stock === 0" class="badge out-of-stock-badge">Out of Stock</span>
+        <span *ngIf="product.isPromo" class="badge promo-badge">Promo</span>
+      </div>
+      <button class="btn btn-primary" (click)="editProduct(product)">✏️ Edit</button>
+    </div>
+  </div>
+</div>
+
+<div class="pagination">
+  <button class="btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+  <span>Page {{currentPage}} of {{totalPages}}</span>
+  <button class="btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+</div>
+
+<!-- Product Form Modal -->
+<div class="modal" *ngIf="showProductForm" (click)="cancelEdit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
+    <form (ngSubmit)="saveProduct()">
+      <label>
+        SKU:
+        <input type="text" [(ngModel)]="productForm.sku" name="sku" required />
+      </label>
+      <label>
+        Name:
+        <input type="text" [(ngModel)]="productForm.name" name="name" required />
+      </label>
+      <label>
+        Description:
+        <textarea [(ngModel)]="productForm.description" name="description" required></textarea>
+      </label>
+      <label>
+        Price:
+        <input type="number" [(ngModel)]="productForm.price" name="price" required min="0" step="0.01" />
+      </label>
+      <label>
+        Category:
+      <select [(ngModel)]="productForm.category" name="category" required>
+          <option value="" disabled>Select category</option>
+          <option *ngFor="let category of categories; let i = index" [value]="categoryValues[i]">{{ category }}</option>
+        </select>
+      </label>
+      <label>
+        Image URL:
+        <input type="text" [(ngModel)]="productForm.image" name="image" />
+      </label>
+      <label>
+        Stock:
+        <input type="number" [(ngModel)]="productForm.stock" name="stock" required min="0" />
+      </label>
+      <label>
+        Status:
+        <input type="checkbox" [(ngModel)]="productForm.status" name="status" />
+      </label>
+      <label>
+        New Product:
+        <input type="checkbox" [(ngModel)]="productForm.isNew" name="isNew" />
+      </label>
+      <label>
+        Promotional Product:
+        <input type="checkbox" [(ngModel)]="productForm.isPromo" name="isPromo" />
+      </label>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Save Changes' : 'Add Product' }}</button>
+        <button type="button" class="btn" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

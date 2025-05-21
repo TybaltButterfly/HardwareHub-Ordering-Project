@@ -1,0 +1,309 @@
+.flash-sales-page {
+  padding: 16px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* Top Bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.top-bar h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-dark);
+}
+
+.top-bar button {
+  color: var(--primary-dark);
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.top-bar button.back-btn:hover {
+  background-color: var(--white);
+}
+
+/* Urgency Banner */
+.urgency-banner {
+  background-color: #fff3cd;
+  border-left: 4px solid var(--secondary-color);
+  padding: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.view-all-deals-btn {
+  background-color: var(--secondary-color, #6c757d);
+  border: none;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.view-all-deals-btn:hover {
+  background-color: #e27f00;
+}
+
+/* Filter & Sort Tools */
+.filter-sort-tools {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.filter-sort-tools select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Product Card */
+.product-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+  min-height: 380px;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+}
+
+.product-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: fill;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+/* Product Info */
+.product-info h3 {
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+
+.price {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.original-price {
+  color: #888;
+  font-size: 0.9rem;
+  text-decoration: line-through;
+  margin-left: 6px;
+}
+
+.stock-warning {
+  color: var(--danger-color);
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+/* Progress Bar */
+.stock-progress-bar {
+  margin: 10px 0 6px;
+}
+
+.progress-bar-bg {
+  background-color: #eee;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  background-color: var(--danger-color);
+  height: 10px;
+  width: 0%;
+  border-radius: 5px;
+  transition: width 0.3s ease-in-out;
+}
+
+/* Location & Delivery */
+.location-tag,
+.delivery-estimate {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Buttons */
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+/* Primary Button - Green */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Secondary Button - Light */
+.btn-secondary {
+  background-color: var(--neutral-light);
+  color: var(--primary-color);
+  border: 1px solid #24a28b;
+}
+
+.btn-secondary:hover {
+  background-color: #eaeaea;
+}
+
+/* Quick Buy Modal */
+.quick-buy-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 24px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.quick-buy-image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.quick-buy-quantity {
+  width: 80px;
+  margin: 8px 0;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Confirm Button - Green */
+.confirm-pay-btn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 16px;
+  margin-top: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.confirm-pay-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Promo Callouts */
+.promo-callouts {
+  margin: 24px 0 16px;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.promo-callouts p {
+  margin: 4px 0;
+}
+
+/* Sticky Cart Summary */
+.sticky-cart-summary {
+  position: sticky;
+  bottom: 0;
+  background: var(--neutral-light);
+  border-top: 1px solid #ddd;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+}
+
+.sticky-cart-summary button {
+  background: var(--primary-light);
+  border: 1px solid  var(--primary-dark);
+  color:  var(--primary-color);
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* End-of-List */
+.end-of-list-note {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 0.95rem;
+  color: #777;
+}

@@ -1,0 +1,67 @@
+<app-navbar></app-navbar>
+<div class="my-orders-container">
+  <button class="back-btn" (click)="goBack()"><i class="fas fa-arrow-left"></i></button>
+  <h2>My Orders</h2>
+  <div class="tabs">
+    <button [class.active]="filterStatus === 'Pending'" (click)="onFilterChange('Pending')"><i class="fas fa-hourglass-start"></i> Pending</button>
+    <button [class.active]="filterStatus === 'Processing'" (click)="onFilterChange('Processing')"><i class="fas fa-cogs"></i> Processing</button>
+    <button [class.active]="filterStatus === 'Shipped'" (click)="onFilterChange('Shipped')"><i class="fas fa-truck"></i> Shipped</button>
+    <button [class.active]="filterStatus === 'Delivered'" (click)="onFilterChange('Delivered')"><i class="fas fa-box"></i> Delivered</button>
+    <button [class.active]="filterStatus === 'Received'" (click)="onFilterChange('Received')"><i class="fas fa-check-circle"></i> Received</button>
+    <button [class.active]="filterStatus === 'Cancelled'" (click)="onFilterChange('Cancelled')"><i class="fas fa-times-circle"></i> Cancelled</button>
+  </div>
+
+  <div *ngIf="filteredOrders.length === 0" class="no-orders-message">
+    <p>No orders found in this category.</p>
+  </div>
+
+  <div *ngFor="let order of filteredOrders" class="order-card">
+    <div class="order-header">
+      <span class="order-number"><i class="fas fa-id-badge"></i> Order Number: #{{order.orderId}}</span>
+      <span class="order-date"><i class="fas fa-calendar-alt"></i> Order Date: {{order.orderDate | date:'mediumDate'}}</span>
+    </div>
+    <div class="order-summary">
+      <p><i class="fas fa-shopping-cart"></i> Item Summary: {{ getProductNames(order) }}</p>
+      <p><i class="fas fa-money-bill-wave"></i> Total Cost: ₱{{order.totalPrice}}</p>
+      <p><i class="fas fa-map-marker-alt"></i> Delivery Address: {{order.shippingAddress}}</p>
+      <p>
+        <i class="fas fa-bullseye"></i> Status: 
+        <span class="status-badge" [ngClass]="order.status.toLowerCase()">{{order.status}}</span>
+      </p>
+    </div>
+
+    <div class="status-message" *ngIf="order.status === 'Pending'">
+      <p>Waiting for confirmation.</p>
+      <p>Expected confirmation time: Within 24 hrs.</p>
+      <button *ngIf="!order.processed" (click)="cancelOrder(order.orderId)"><i class="fas fa-ban"></i> Cancel Order</button>
+    </div>
+
+    <div class="status-message" *ngIf="order.status === 'Processing'">
+      <p>Your items are being packed.</p>
+      <p>You’ll get a notification when shipped.</p>
+    </div>
+
+    <div class="status-message" *ngIf="order.status === 'Shipped'">
+      <p>Your order has been shipped.</p>
+      <p *ngIf="order.courierInfo">Courier: {{order.courierInfo}}</p>
+      <p *ngIf="order.estimatedDelivery">Estimated delivery time: {{order.estimatedDelivery | date:'mediumDate'}}</p>
+      <p *ngIf="order.trackingNumber">Tracking number: {{order.trackingNumber}}</p>
+      <!-- Future feature: Rate Products / Give Feedback button -->
+    </div>
+
+  <div class="status-message" *ngIf="order.status === 'Cancelled'">
+    <p>This order was cancelled.</p>
+    <p *ngIf="order.cancelReason">Reason: {{order.cancelReason}}</p>
+    <button (click)="reorder(order)"><i class="fas fa-redo"></i> Reorder</button>
+    <!-- Optional: Contact Support button -->
+  </div>
+  <div class="status-message" *ngIf="order.status === 'Delivered'">
+    <p>Your order has been delivered.</p>
+    <button (click)="markAsReceived(order.orderId)"><i class="fas fa-check-circle"></i> Mark as Received</button>
+  </div>
+  <div class="status-message" *ngIf="order.status === 'Received'">
+    <p>Thank you for confirming receipt of your order.</p>
+  </div>
+
+    <button (click)="viewOrderDetails(order.orderId)"><i class="fas fa-info-circle"></i> View Details</button>
+  </div>

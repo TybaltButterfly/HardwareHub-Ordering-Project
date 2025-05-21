@@ -9,6 +9,12 @@ import { CartComponent } from './user/cart/cart.component';
 import { UserprofileComponent } from './user/userprofile/userprofile.component';
 import { SearchResultsComponent } from './user/search-results/search-results.component';
 import { ToolboxComponent } from './user/toolbox/toolbox.component';
+import { UserProductsComponent } from './user/user-products/user-products.component';
+import { ProductDetailsComponent } from './user/product-details/product-details.component';
+import { FlashSalesComponent } from './user/flash-sales/flash-sales.component';
+import { CheckoutComponent } from './user/checkout/checkout.component';
+import { MyOrdersComponent } from './user/my-orders/my-orders.component';
+import { OrderDetailsComponent } from './user/order-details/order-details.component';
 
 export const routes: Routes = [
   { path: '', component: SplashComponent },   
@@ -22,5 +28,11 @@ export const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'search', component: SearchResultsComponent },
   { path: 'toolbox', component: ToolboxComponent },
+  { path: 'products', component: UserProductsComponent },
+  { path: 'flash-sales', component: FlashSalesComponent },
+  { path: 'product-details/:id', component: ProductDetailsComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'my-orders', component: MyOrdersComponent },
+  { path: 'order-details/:id', component: OrderDetailsComponent },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)}
 ];

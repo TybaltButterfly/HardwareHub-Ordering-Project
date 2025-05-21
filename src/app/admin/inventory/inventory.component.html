@@ -1,0 +1,26 @@
+<button (click)="goBack()" class="btn btn-secondary">
+  <i class="fas fa-arrow-left"></i></button>
+<h2>Inventory Management</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Category</th>
+      <th>Stock</th>
+      <th>Update Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.name }}</td>
+      <td>{{ product.category }}</td>
+      <td>{{ product.stock }}</td>
+      <td>
+        <input type="number" [(ngModel)]="product.stock" min="0" />
+        <button (click)="updateStock(product)" class="btn btn-primary">
+          <i class="fas fa-sync-alt"></i> Update
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,101 @@
+<div class="flash-sales-page">
+
+  <div class="top-bar">
+    <button class="back-btn" (click)="goBack()"><i class="fas fa-arrow-left"></i></button>
+    <h1>Flash Sales</h1>
+    <button class="cart-btn" (click)="goToCart()">
+      <i class="fa fa-shopping-cart"></i> {{ cartItemCount }}
+    </button>
+  </div>
+
+  <!-- Urgency Banner & Timer -->
+  <div class="urgency-banner">
+    <span class="limited-time">🚨 LIMITED TIME ONLY! ⏰ Sale ends in {{ countdown }}</span>
+    <button class="view-all-deals-btn">View All Deals</button>
+  </div>
+
+  <!-- Filter & Sort Tools -->
+  <div class="filter-sort-tools">
+    <select (change)="onCategoryChange($any($event.target).value)">
+      <option value="">📂 Category ▼</option>
+      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+    </select>
+
+    <select (change)="onPriceRangeChange($any($event.target).value)">
+      <option value="">₱ Price ▼</option>
+      <option value="0-100">₱0 - ₱100</option>
+      <option value="101-500">₱101 - ₱500</option>
+      <option value="501-1000">₱501 - ₱1000</option>
+      <option value="1001+">₱1001+</option>
+    </select>
+
+    <select (change)="onSortChange($any($event.target).value)">
+      <option value="Popular">Sort by: Popular ▼</option>
+      <option value="PriceLowHigh">Price: Low to High</option>
+      <option value="PriceHighLow">Price: High to Low</option>
+    </select>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="product-grid">
+    <div class="product-card" *ngFor="let product of flashSaleProducts">
+      <img [src]="product.image" [alt]="product.name" />
+      <div class="product-info">
+        <h3>{{ product.name }}</h3>
+        <p class="price">₱{{ product.salePrice }} <span class="original-price">~₱{{ product.price }}~</span></p>
+        <p class="stock-warning" *ngIf="product.stock !== undefined && product.stock <= 5" style="color: orangered; font-weight: bold;">
+          🔥 Only {{ product.stock }} Left!
+        </p>
+        <div class="stock-progress-bar" *ngIf="product.stock !== undefined && product.stock > 0 && product.stock <= 20" style="margin-bottom: 8px;">
+          <div class="progress-bar-bg" style="background-color: lightgray; width: 100%; height: 10px; border-radius: 5px;">
+            <div class="progress-bar-fill" [style.width.%]="(20 - product.stock) * 5" style="background-color: orangered; height: 10px; border-radius: 5px;"></div>
+          </div>
+          <p style="font-size: 12px; margin: 2px 0 0 0;">Sold: {{ 20 - product.stock }} of 20 – {{ ((20 - product.stock) / 20 * 100) | number:'1.0-0' }}% Claimed!</p>
+        </div>
+        <p *ngIf="product.availableLocations && product.availableLocations.length > 0" class="location-tag" style="font-size: 12px; color: #555;">
+          Available in: {{ product.availableLocations.join(', ') }}
+        </p>
+        <p *ngIf="product.deliveryEstimate" class="delivery-estimate" style="font-size: 12px; color: #555;">
+          🕓 {{ product.deliveryEstimate }}
+        </p>
+      <div class="button-container">
+        <button class="btn btn-primary" (click)="addToCart(product)">Add to Cart</button>
+        <button class="btn btn-secondary" (click)="openQuickBuyModal(product)">Buy Now</button>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Buy Modal -->
+  <div class="quick-buy-modal" *ngIf="quickBuyProduct">
+    <div class="modal-content">
+      <button class="close-btn" (click)="closeQuickBuyModal()">&times;</button>
+      <h3>{{ quickBuyProduct.name }}</h3>
+      <img [src]="quickBuyProduct.image" [alt]="quickBuyProduct.name" class="quick-buy-image" />
+      <p>Price: ₱{{ quickBuyProduct.salePrice ?? quickBuyProduct.price }}</p>
+      <label for="quickBuyQuantity">Quantity:</label>
+      <input id="quickBuyQuantity" type="number" [(ngModel)]="quickBuyQuantity" min="1" [max]="quickBuyProduct.stock ?? 99" class="quick-buy-quantity" />
+      <p *ngIf="quickBuyProduct.deliveryEstimate">Delivery: {{ quickBuyProduct.deliveryEstimate }}</p>
+      <button (click)="confirmQuickBuy()" class="confirm-pay-btn">Confirm & Pay</button>
+    </div>
+  </div>
+
+  <!-- Promo Callouts (Optional) -->
+  <div class="promo-callouts">
+    <p *ngFor="let promo of promoCallouts">
+      {{ promo.icon }} {{ promo.message }}
+    </p>
+  </div>
+
+  <!-- Sticky Cart Summary Bar (Optional) -->
+  <div class="sticky-cart-summary">
+    <span><i class="fa fa-shopping-cart"></i> {{ cartItemCount }} items | Total: ₱{{ totalPrice }}</span>
+    <button (click)="goToCart()">Go to Cart</button>
+  </div>
+
+  <!-- End-of-List Note -->
+  <div class="end-of-list-note">
+    <p>🎉 That’s all for today’s Flash Deals! Come back tomorrow for more exclusive offers.</p>
+  </div>
+
+</div>

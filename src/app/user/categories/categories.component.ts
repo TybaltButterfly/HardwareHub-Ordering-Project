@@ -98,18 +98,29 @@ export class CategoriesComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.categoryName = params.get('categoryName');
-      console.log('Selected category:', this.categoryName);
-      if (this.categoryName) {
-        this.filteredCategories = this.categories.filter(cat =>
-          cat.routerLink.toLowerCase().includes(this.categoryName!.toLowerCase())
-        );
-        this.products = this.productService.getProductsByCategory(this.categoryName);
-        this.filteredProducts = this.products;
-      } else {
-        this.filteredCategories = this.categories;
-        this.products = [];
-        this.filteredProducts = [];
-      }
+      this.route.queryParams.subscribe(queryParams => {
+        const mode = queryParams['mode'] || 'all';
+        console.log('Selected category:', this.categoryName, 'Mode:', mode);
+        if (this.categoryName) {
+          this.filteredCategories = this.categories.filter(cat =>
+            cat.routerLink.toLowerCase().includes(this.categoryName!.toLowerCase())
+          );
+          if (mode === 'new') {
+            // Filter new products in the category
+            this.products = this.productService.getNewArrivalsProducts().filter(product =>
+              product.category.toLowerCase() === this.categoryName!.toLowerCase()
+            );
+          } else {
+            // All products in the category
+            this.products = this.productService.getProductsByCategory(this.categoryName);
+          }
+          this.filteredProducts = this.products;
+        } else {
+          this.filteredCategories = this.categories;
+          this.products = [];
+          this.filteredProducts = [];
+        }
+      });
     });
   }
 

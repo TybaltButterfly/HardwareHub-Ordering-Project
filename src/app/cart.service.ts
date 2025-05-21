@@ -19,9 +19,29 @@ export class CartService {
   private cartItemsSubject: BehaviorSubject<CartItem[]> = new BehaviorSubject<CartItem[]>([]);
   cartItems$: Observable<CartItem[]> = this.cartItemsSubject.asObservable();
 
+  private selectedItemIdsSubject: BehaviorSubject<Set<number>> = new BehaviorSubject<Set<number>>(new Set());
+  selectedItemIds$: Observable<Set<number>> = this.selectedItemIdsSubject.asObservable();
+
+  private storageKey = 'hardwarehub_cart_items';
+
   constructor() {
-    // Initialize with empty or persisted cart items if needed
-    this.cartItemsSubject.next([]);
+    // Load cart items from localStorage if available
+    const storedItems = localStorage.getItem(this.storageKey);
+    if (storedItems) {
+      try {
+        const items: CartItem[] = JSON.parse(storedItems);
+        this.cartItemsSubject.next(items);
+      } catch {
+        this.cartItemsSubject.next([]);
+      }
+    } else {
+      this.cartItemsSubject.next([]);
+    }
+
+    // Subscribe to changes and persist to localStorage
+    this.cartItems$.subscribe(items => {
+      localStorage.setItem(this.storageKey, JSON.stringify(items));
+    });
   }
 
   getCartItems(): CartItem[] {
@@ -30,6 +50,19 @@ export class CartService {
 
   setCartItems(items: CartItem[]): void {
     this.cartItemsSubject.next(items);
+  }
+
+  setSelectedItemIds(ids: Set<number>): void {
+    this.selectedItemIdsSubject.next(new Set(ids));
+  }
+
+  getSelectedItemIds(): Set<number> {
+    return this.selectedItemIdsSubject.getValue();
+  }
+
+  getSelectedCartItems(): CartItem[] {
+    const selectedIds = this.getSelectedItemIds();
+    return this.getCartItems().filter(item => selectedIds.has(item.id));
   }
 
   addItem(item: CartItem): void {

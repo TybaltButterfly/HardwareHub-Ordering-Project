@@ -1,0 +1,144 @@
+<div class="admin-settings-container">
+  <button class="back-to-admin" (click)="navigateBack()">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+  <h2>Admin Settings</h2>
+
+  <div class="settings-grid">
+    <div class="setting-card" (click)="openModal('profile')"><i class="fas fa-user"></i><h3>Profile & Security</h3></div>
+    <div class="setting-card" (click)="openModal('storeConfig')"><i class="fas fa-store"></i><h3>Store Configuration</h3></div>
+    <div class="setting-card" (click)="openModal('shippingDelivery')"><i class="fas fa-shipping-fast"></i><h3>Shipping & Delivery</h3></div>
+    <div class="setting-card" (click)="openModal('paymentSetup')"><i class="fas fa-credit-card"></i><h3>Payment Setup</h3></div>
+    <div class="setting-card" (click)="openModal('notifications')"><i class="fas fa-bell"></i><h3>Notifications</h3></div>
+    <div class="setting-card" (click)="openModal('adminManagement')"><i class="fas fa-users-cog"></i><h3>Admin Management</h3></div>
+    <div class="setting-card" (click)="openModal('systemPreferences')"><i class="fas fa-cogs"></i><h3>System Preferences</h3></div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="modalOpen">
+    <div class="modal-content">
+      <i class="fas fa-times close-icon" (click)="closeModal()"></i>
+
+      <!-- Profile Form -->
+      <form *ngIf="selectedSetting === 'profile' && profileFormGroup" [formGroup]="profileFormGroup" (ngSubmit)="onSubmit()">
+        <h3>Profile & Security</h3>
+        <label>Name: <input formControlName="name" type="text" /></label>
+        <label>Email: <input formControlName="email" type="email" /></label>
+        <label>Contact Number: <input formControlName="contactNumber" type="tel" /></label>
+
+        <div>
+          <label for="profilePhotoInput">Profile Photo:</label>
+          <input type="file" id="profilePhotoInput" (change)="onFileChange($event, 'profile.profilePhoto')" />
+          <label for="profilePhotoInput" class="custom-file-label">Choose File</label>
+          <span *ngIf="profilePhotoName" class="file-name">{{ profilePhotoName }}</span>
+          <div class="profile-photo-preview-container">
+            <img *ngIf="profilePhoto" [src]="profilePhoto" alt="Profile Photo" class="profile-photo-preview" />
+            <p *ngIf="!profilePhoto">No profile photo selected</p>
+          </div>
+        </div>
+
+        <div *ngIf="passwordChangeGroup" [formGroup]="passwordChangeGroup">
+          <label>Current Password: <input formControlName="currentPassword" type="password" /></label>
+          <label>New Password: <input formControlName="newPassword" type="password" /></label>
+        </div>
+
+        <label>Enable 2FA: <input formControlName="twoFactorAuth" type="checkbox" /></label>
+
+        <button type="submit" class="btn btn-primary" [disabled]="profileFormGroup.invalid">Save Settings</button>
+      </form>
+
+      <!-- Other Forms -->
+      <form *ngIf="selectedSetting !== 'profile' && selectedSetting !== 'adminManagement'" [formGroup]="getFormGroupForSetting(selectedSetting ?? 'profile')" 
+      (ngSubmit)="onSubmit()"><ng-container [ngSwitch]="selectedSetting ?? 'profile'">
+
+          <!-- Store Config -->
+          <ng-container *ngSwitchCase="'storeConfig'">
+            <h3>Store Configuration</h3>
+            <label>Store Name: <input formControlName="storeName" type="text" [placeholder]="currentAppInfo.storeConfig.storeName" /></label>
+            <label>Store Description: <textarea formControlName="storeDescription" [placeholder]="currentAppInfo.storeConfig.storeDescription"></textarea></label>
+
+          <div>
+          <label for="storeLogoInput">Store Logo:</label>
+          <input type="file" id="storeLogoInput" (change)="onFileChange($event, 'storeConfig.storeLogo')" />
+          <label for="storeLogoInput" class="custom-file-label">Choose File</label>
+          <div class="store-logo-preview-container">
+            <img *ngIf="storeConfigFormGroup?.get('storeLogo')?.value" 
+             [src]="storeConfigFormGroup?.get('storeLogo')?.value" 
+             class="store-logo-preview" />
+            <p *ngIf="!storeConfigFormGroup?.get('storeLogo')?.value">No store logo selected</p>
+          </div>
+        </div>
+
+            <label>Phone Number: <input formControlName="storePhone" type="tel" /></label>
+            <label>Support Email: <input formControlName="supportEmail" type="email" /></label>
+            <label>Social Links: <textarea formControlName="socialLinks"></textarea></label>
+          </ng-container>
+
+          <!-- Shipping & Delivery -->
+          <ng-container *ngSwitchCase="'shippingDelivery'">
+            <h3>Shipping & Delivery</h3>
+            <label>Free Shipping: <input formControlName="freeShipping" type="checkbox" /></label>
+            <label>Flat Rate Shipping: <input formControlName="flatRate" type="number" min="0" /></label>
+            <label>Delivery Range: <input formControlName="deliveryRange" type="text" /></label>
+            <label>Estimated Delivery Time: <input formControlName="estimatedDeliveryTime" type="text" /></label>
+          </ng-container>
+
+          <!-- Payment -->
+          <ng-container *ngSwitchCase="'paymentSetup'">
+            <h3>Payment Setup</h3>
+            <label>COD: <input formControlName="cod" type="checkbox" /></label>
+            <label>GCash: <input formControlName="gcash" type="checkbox" /></label>
+            <label>Payment Instructions: <textarea formControlName="paymentInstructions"></textarea></label>
+          </ng-container>
+
+          <!-- Notifications -->
+          <ng-container *ngSwitchCase="'notifications'">
+            <h3>Notifications</h3>
+            <label>Order Confirmation Emails: <input formControlName="orderConfirmationEmails" type="checkbox" /></label>
+            <label>Low Stock Alerts: <input formControlName="lowStockAlerts" type="checkbox" /></label>
+            <label>Customer Inquiry Alerts: <input formControlName="customerInquiryAlerts" type="checkbox" /></label>
+          </ng-container>
+
+          <!-- System Preferences -->
+          <ng-container *ngSwitchCase="'systemPreferences'">
+            <h3>System Preferences</h3>
+            <label>
+              Dashboard Layout Style:
+              <select formControlName="dashboardLayoutStyle">
+                <option value="card">Card</option>
+                <option value="list">List</option>
+              </select>
+            </label>
+          </ng-container>
+
+        </ng-container>
+
+      <button type="submit" class="btn btn-primary" [disabled]="getFormGroupForSetting(selectedSetting).invalid">Save Settings</button>
+
+      </form>
+      <!-- Admin Management -->
+      <div *ngIf="selectedSetting === 'adminManagement'">
+        <h3>Admin Management</h3>
+      <div>
+        <label>New Admin Email: <input [(ngModel)]="newAdminEmail" type="email" /></label>
+        <label>New Admin Password: <input [(ngModel)]="newAdminPassword" type="password" /></label>
+        <button type="button" class="btn btn-primary" (click)="addAdmin()">Add New Admin</button>
+      </div>
+      <div>
+        <h4>Existing Admins</h4>
+        <ul>
+          <li *ngFor="let admin of admins; let i = index">
+            {{ admin.email }} - Access: {{ admin.accessLevel }}
+            <button type="button" class="btn btn-danger" (click)="removeAdmin(i)">Remove</button>
+            <select [(ngModel)]="admin.accessLevel" (change)="updateAccessLevel(i, admin.accessLevel)">
+              <option value="superadmin">Super Admin</option>
+              <option value="admin">Admin</option>
+              <option value="viewer">Viewer</option>
+            </select>
+          </li>
+        </ul>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

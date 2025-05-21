@@ -1,0 +1,79 @@
+<div *ngIf="product" class="product-details-container">
+  <nav class="top-nav">
+    <button class="arrow-back" (click)="goBack()" aria-label="Back"><i class="fas fa-arrow-left"></i></button>
+  </nav>
+  <!-- Top Section -->
+  <div class="top-section">
+    <div class="image-carousel">
+      <img [src]="product.image" alt="{{ product.name }}" class="main-image" />
+    </div>
+    <div class="product-info">
+      <h1 class="product-title">{{ product.name }}</h1>
+      <div class="rating" *ngIf="product.rating !== undefined && product.rating !== null">
+        <span *ngFor="let star of [1,2,3,4,5]; let i = index">
+<i class="fa-star" [ngClass]="getStarClass(product.rating, i)"></i>
+        </span>
+        <span class="rating-value">{{ product.rating.toFixed(1) }}</span>
+      </div>
+      <div class="sku-stock">
+        <span>SKU: BOSCH-12MS</span> | <span style="color: rgb(41, 187, 41); font-weight: bold;">In Stock</span>
+      </div>
+      <div class="price">{{ product.price | currency:'PHP':'symbol':'1.2-2' }}</div>
+      <div class="quantity-selector">
+        <button (click)="decreaseQuantity()">-</button>
+        <input type="text" [value]="quantity" readonly />
+        <button (click)="increaseQuantity()">+</button>
+      </div>
+      <div class="action-buttons">
+        <button class="add-to-cart-btn" (click)="addToCart(product)">Add to Cart</button>
+        <button class="wishlist-btn top-heart-icon" title="Add to Toolbox" (click)="addToToolbox(product)">
+          <i class="fa-regular fa-heart"></i>
+        </button>
+      </div>
+      <div class="free-shipping-note"><i class="fas fa-truck"></i> Free shipping on orders over ₱2,000</div>
+    </div>
+  </div>
+
+  <!-- Tabs Section -->
+  <div class="middle-section">
+    <div class="tabs">
+      <input type="radio" id="tab-details" name="tab-group" checked />
+      <label for="tab-details">Details</label>
+      <input type="radio" id="tab-reviews" name="tab-group" />
+      <label for="tab-reviews">Reviews</label>
+
+      <div class="tab-content" id="details-content">
+        <p>{{ product.detailsText }}</p>
+        <ul>
+          <li *ngFor="let detail of product.detailsList">{{ detail }}</li>
+        </ul>
+      </div>
+
+      <div class="tab-content" id="reviews-content">
+        <div *ngFor="let review of product.reviews">
+          <p><strong>{{ review.author }}</strong>: {{ review.comment }}</p>
+        </div>
+        <p *ngIf="!product.reviews || product.reviews.length === 0">No customer reviews available.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recommendations Section -->
+  <div class="bottom-section">
+    <h2>You might also like</h2>
+    <div class="recommendations-carousel">
+<div class="recommendation-card" *ngFor="let rec of recommendedProducts">
+  <img [src]="rec.image" alt="{{ rec.name }}" />
+  <div class="rec-name">{{ rec.name }}</div>
+    <div class="sku-stock">
+    <span>{{ rec.price | currency:'PHP':'symbol':'1.2-2' }}</span> | 
+    <span [style.color]="rec.stock && rec.stock > 0 ? 'rgb(41, 187, 41)' : 'red'" [style.font-weight]="'bold'">
+      {{ rec.stock && rec.stock > 0 ? 'In Stock' : 'Out of Stock' }}
+    </span>
+  </div>
+  <button class="wishlist-btn" title="Add to Toolbox" (click)="addToToolbox(rec)">
+    <i class="fa-regular fa-heart"></i>
+  </button>
+</div>
+    </div>
+  </div>

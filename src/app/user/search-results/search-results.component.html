@@ -1,11 +1,14 @@
+<button class="arrow-back" (click)="back()" aria-label="Back to previous page"><i class="fas fa-arrow-left"></i></button>
 <div class="search-results">
   <h2>Search Results for "{{ query }}"</h2>
   <div *ngIf="filteredProducts.length > 0; else noResults">
     <ul>
-      <li *ngFor="let product of filteredProducts">
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.description }}</p>
-        <p>Price: ₱{{ product.price.toFixed(2) }}</p>
+      <li *ngFor="let product of filteredProducts" class="product-item">
+        <a [routerLink]="['/product-details', product.id]" tabindex="0">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+          <p>Price: ₱{{ product.price.toFixed(2) }}</p>
+        </a>
       </li>
     </ul>
   </div>

@@ -67,13 +67,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   bannerCtaLabel: string = 'Shop Now';
   bannerCtaTarget: string = '/categories'; // target route to categories
 
-  ngOnInit(): void {
+ngOnInit(): void {
     this.userSubscription = this.userService.user$.subscribe(user => {
       this.currentUser = user;
     });
 
-    this.flashSales = this.productService.getFlashSalesProducts();
-    this.newArrivals = this.productService.getNewArrivalsProducts();
+    this.flashSales = this.productService.getFlashSalesProducts().slice(0, 4);
+    this.newArrivals = this.productService.getNewArrivalsProducts().slice(0, 5);
 
     this.startCountdown();
   }
@@ -210,5 +210,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     };
     this.toolboxService.addItem(toolboxItem);
     alert(`${product.name} has been added to your toolbox.`);
+  }
+
+  navigateToProductDetails(id: string): void {
+    this.router.navigate(['/product-details', id]);
   }
 }

@@ -47,7 +47,7 @@
     <a routerLink="/flash-sales" class="view-all-link">View all</a>
   </div>
   <div class="flash-sales-carousel">
-      <div class="flash-sale-card" *ngFor="let product of flashSales">
+      <div class="flash-sale-card" *ngFor="let product of flashSales" (click)="navigateToProductDetails(product.id.toString())" style="cursor:pointer;">
         <div class="deal-label">
           <span>Deal of the Day</span>
           <div class="countdown-timer" *ngIf="product.timeLeft">
@@ -76,7 +76,7 @@
   <div class="new-arrivals-header">
     <div class="new-arrivals-title">
       <h2>New Arrivals</h2>
-      <a href="#" class="view-all-new-products">View All Products</a>
+<a [routerLink]="['/products']" [queryParams]="{ mode: 'new' }" class="view-all-new-products">View New Products</a>
     </div>
     <p>Check out the latest additions to our hardware inventory.</p>
   </div>  
@@ -99,7 +99,7 @@
         <span class="rating-value">{{ product.rating.toFixed(1) }}</span>
       </div>
       <button class="add-to-cart-btn" (click)="addToCart(product)">Add to Cart</button>
-      <button class="view-details-btn">View Details</button>
+<button class="view-details-btn" [routerLink]="['/product-details', product.id]">View Details</button>
     </div>
   </div>
 </section>

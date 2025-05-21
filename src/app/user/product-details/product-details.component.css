@@ -1,0 +1,391 @@
+/* Base Host Styles */
+:host {
+  display: block;
+  font-family: var(--primary-font);
+  color: var(--text-primary);
+  background-color: var(--primary-light);
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Top */
+.top-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: var(--neutral-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.top-nav button.arrow-back {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--primary-dark);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.top-nav button.arrow-back:hover {
+  background-color: var(--white);
+}
+
+/* Product Image */
+.image-carousel {
+  flex: 1 1 40%;
+  max-width: 400px;
+}
+
+.image-carousel .main-image {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Details Section */
+.product-details, .product-info {
+  flex: 1 1 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Title */
+.product-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--primary-dark);
+}
+
+/* Category, Description, Rating */
+.product-category,
+.product-description,
+.rating-value {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+}
+
+.product-description {
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.product-price,
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.product-rating,
+.rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.product-rating i,
+.rating i {
+  color: var(--star-color, #f5a623);
+  margin-right: 0.25rem;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+/* Quantity Controls */
+.quantity-control,
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 0.5rem;
+}
+
+.quantity-control button,
+.quantity-selector button {
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--neutral-light);
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem; /* Adjusted padding for better balance */
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0; /* Prevents the button from shrinking */
+}
+
+.quantity-control button:hover,
+.quantity-selector button:hover {
+  background-color: var(--primary-dark);
+}
+
+.quantity-control span,
+.quantity-selector input {
+  margin: 0;
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem; /* Padding to match the buttons */
+  min-width: 40px; /* Ensures input field is a consistent width */
+  border: 1px solid var(--neutral-dark); /* Optional: adds a border around the input */
+  border-radius: 6px;
+  background-color: #fff; /* Background for better readability */
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-selector button {
+  padding: 0.5rem; /* Keeps button padding balanced */
+}
+
+.quantity-selector input {
+  width: 40px; /* Fixes the width of the input */
+}
+
+/* Add to Cart Button */
+.add-to-cart-btn {
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--neutral-light);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+}
+
+.add-to-cart-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+.add-to-cart-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Tabs Section */
+.tabs {
+  margin-top: 2rem;
+}
+
+.tabs input[type="radio"] {
+  display: none;
+}
+
+.tabs label {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background-color: var(--neutral-light);
+  border-radius: 6px 6px 0 0;
+  font-weight: 600;
+  margin-right: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.tabs input:checked + label {
+  background-color: var(--primary-color);
+  color: var(--neutral-light);
+}
+
+.tab-content {
+  display: none;
+  padding: 1rem;
+  background: white;
+  border: 1px solid var(--neutral-light);
+  border-top: none;
+}
+
+#tab-details:checked ~ #details-content,
+#tab-reviews:checked ~ #reviews-content {
+  display: block;
+}
+
+/* Reviews Section */
+.reviews-content p {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* Bottom Section (Recommendations) */
+.bottom-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #ddd;
+}
+
+.bottom-section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+}
+
+/* Recommendation Carousel */
+.recommendations-carousel {
+  display: flex;
+  gap: 1.2rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color, #007bff) transparent;
+}
+
+.recommendations-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.recommendations-carousel::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color, #007bff);
+  border-radius: 4px;
+}
+
+.recommendation-card {
+  min-width: 180px;  /* Ensures each card has a minimum width */
+  flex-shrink: 0;
+  background-color: var(--neutral-light);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center; /* Centers content inside the card */
+  max-width: 200px; /* Prevents the card from expanding too much */
+  position: relative; /* Added for positioning heart icon */
+}
+
+.recommendation-card:hover {
+  transform: translateY(-4px);
+}
+
+.recommendation-card img {
+  width: 100%;           
+  height: 200px;         
+  object-fit: fill;
+  border-radius: 6px;
+  background-color: #f0f0f0;
+  margin-bottom: 1rem;   
+  max-width: 100%;      
+  max-height: 200px;   
+}
+
+.rec-name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.rec-price {
+  font-size: 0.95rem;
+  color: var(--primary-color, #007bff);
+  margin-bottom: 0.5rem;
+}
+
+.wishlist-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primary-color, #007bff);
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+  position: absolute; /* Added for positioning */
+  top: 17px; /* Adjusted to be closer to corner */
+  right: 25px; /* Adjusted to be closer to corner */
+  z-index: 10; /* Ensure it is above other elements */
+  padding: 0; /* Remove extra padding */
+}
+
+.wishlist-btn:hover {
+  color: var(--primary-dark, #0056b3);
+}
+.top-heart-icon {
+  position: static !important;
+  font-size: 1.5rem;
+  color: var(--primary-color, #007bff);
+  margin-left: 1rem;
+  align-self: center;
+  padding: 0;
+}
+
+/* Free Shipping Note */
+.free-shipping-note {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Accessibility Focus States */
+button:focus,
+input:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .product-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .product-image, .product-details, .product-info {
+    max-width: 100%;
+    flex: none;
+  }
+
+  .product-title {
+    font-size: 1.5rem;
+  }
+
+  .product-price {
+    font-size: 1.2rem;
+  }
+
+  .quantity-control,
+  .quantity-selector {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .tabs label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .recommendation-card {
+    min-width: 150px;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}

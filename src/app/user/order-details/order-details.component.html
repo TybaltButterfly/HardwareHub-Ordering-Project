@@ -1,0 +1,17 @@
+<div class="order-details-container" *ngIf="order">
+  <button class="back-btn" (click)="goBack()"><i class="fas fa-arrow-left"></i></button>
+  <h2>Order Details - {{order.orderId}}</h2>
+  <p><strong>Status:</strong> {{order.status}}</p>
+  <p><strong>Delivery Date:</strong> {{order.deliveryDate | date:'mediumDate'}}</p>
+  <p><strong>Shipping Address:</strong> {{getFormattedShippingAddress()}}</p>
+  <h3>Products:</h3>
+<ul>
+  <li *ngFor="let item of order.items">
+    <strong>{{item.name}}</strong>
+    <span>Quantity: {{item.quantity}}</span>
+    <span>Price: {{item.price}}</span>
+    <span>Subtotal: {{item.subtotal}}</span>
+  </li>
+</ul>
+  <p><strong>Total Price:</strong> {{order.totalPrice}}</p>
+</div>

@@ -1,1 +1,44 @@
-<p>dashboard works!</p>
+<div [class.sidebar-collapsed]="sidebarCollapsed" class="dashboard-container">
+  <app-admin-top-nav></app-admin-top-nav>
+  <app-admin-sidebar (sidebarToggle)="onSidebarToggle($event)"></app-admin-sidebar>
+  <main class="dashboard-main">
+    <h1>Dashboard Summary</h1>
+    <div class="summary-cards">
+      <div class="summary-card" (click)="navigateToSection('products')" tabindex="0" role="button" aria-label="Total Products">
+        <i class="fa-solid fa-box"></i>
+        <div class="summary-info">
+          <span class="summary-number">{{ totalProducts }}</span>
+          <span class="summary-label">Total Products</span>
+        </div>
+      </div>
+      <div class="summary-card" (click)="navigateToSection('sales')" tabindex="0" role="button" aria-label="Total Sales This Month">
+        <i class="fa-solid fa-chart-line"></i>
+        <div class="summary-info">
+          <span class="summary-number">{{ totalSalesThisMonth | currency:'PHP' }}</span>
+          <span class="summary-label">Total Sales This Month</span>
+        </div>
+      </div>
+      <div class="summary-card" (click)="navigateToSection('orders')" tabindex="0" role="button" aria-label="New Orders Today">
+        <i class="fa-solid fa-receipt"></i>
+        <div class="summary-info">
+          <span class="summary-number">{{ newOrdersToday }}</span>
+          <span class="summary-label">New Orders Today</span>
+        </div>
+      </div>
+      <div class="summary-card" (click)="navigateToSection('stock')" tabindex="0" role="button" aria-label="Low Stock Alerts">
+        <i class="fa-solid fa-bell"></i>
+        <div class="summary-info">
+          <span class="summary-number">{{ lowStockAlerts }}</span>
+          <span class="summary-label">Low Stock Alerts</span>
+        </div>
+      </div>
+      <div class="summary-card" (click)="navigateToSection('users')" tabindex="0" role="button" aria-label="New Users">
+        <i class="fa-solid fa-users"></i>
+        <div class="summary-info">
+          <span class="summary-number">{{ newUsers }}</span>
+          <span class="summary-label">New Users</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

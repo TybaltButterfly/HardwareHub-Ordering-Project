@@ -5,6 +5,12 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
 
+  private defaultAdmins = [
+    { email: 'scatorccio@gmail.com', password: 'antlerqueen', accessLevel: 'superadmin' },
+    { email: 'taylor@gmail.com', password: 'jackiefruit', accessLevel: 'admin' },
+    { email: 'admin@gmail.com', password: 'admin123', accessLevel: 'superadmin' }
+  ];
+
   constructor() {}
 
   // Check if user is logged in
@@ -16,15 +22,7 @@ export class AuthService {
   // Check if logged-in user is an admin
   isAdmin(): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-
-    // Static admin credentials
-    const staticAdminEmail = 'admin@static.com';
-    const staticAdminPassword = 'admin123';
-
-    // Check if user matches static admin credentials
-    const isStaticAdmin = user?.email === staticAdminEmail && user?.password === staticAdminPassword;
-
-    return user?.role === 'admin' || isStaticAdmin;
+    return user?.role === 'admin';
   }
 
   // Get current user info
@@ -37,16 +35,25 @@ export class AuthService {
     localStorage.removeItem('user');
   }
 
-  // Login method to check static admin credentials
+  // Login method to check credentials against stored admins or default admins
   login(email: string, password: string): boolean {
-    const staticAdminEmail = 'admin@gmail.com';
-    const staticAdminPassword = 'admin123';
-
-    if (email === staticAdminEmail && password === staticAdminPassword) {
-      // Store user info without password for security
+    const settings = localStorage.getItem('adminSettings');
+    let admins: any[] = [];
+    if (settings) {
+      const parsedSettings = JSON.parse(settings);
+      admins = parsedSettings.admins || [];
+    }
+    // Check stored admins first
+    let admin = admins.find((a: any) => a.email === email && a.password === password);
+    // If not found, check default admins
+    if (!admin) {
+      admin = this.defaultAdmins.find(a => a.email === email && a.password === password);
+    }
+    if (admin) {
       localStorage.setItem('user', JSON.stringify({
-        email: email,
-        role: 'admin'
+        email: admin.email,
+        role: 'admin',
+        accessLevel: admin.accessLevel
       }));
       return true;
     }

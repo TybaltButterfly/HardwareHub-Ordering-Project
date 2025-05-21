@@ -7,118 +7,120 @@
     </div>
   </nav>
 
-  <div class="cart-container" *ngIf="cartItems.length > 0; else emptyCart">
-    <table class="cart-table">
-      <thead>
-        <tr>
-          <th>
-            <input
-              type="checkbox"
-              [checked]="selectedItems.size === cartItems.length"
-              (change)="toggleSelectAll()"
-              aria-label="Select All Items"
-            />
-          </th>
-          <th>Product</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Subtotal</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of cartItems">
-          <td>
-            <input
-              type="checkbox"
-              [checked]="selectedItems.has(item.id)"
-              (change)="toggleItemSelection(item)"
-            />
-          </td>
-          <td class="product-cell">
-            <img class="thumbnail" [src]="item.thumbnail" [alt]="item.name" />
-            <div class="product-info">
-              <h3 class="product-name" [title]="item.name">{{ item.name }}</h3>
-            </div>
-          </td>
-          <td>₱{{ item.price }}</td>
-          <td>
-            <div class="quantity-selector">
-              <button (click)="decreaseQuantity(item)" [disabled]="item.quantity <= 1">-</button>
-              <input type="number" [value]="item.quantity" readonly />
-              <button (click)="increaseQuantity(item)" [disabled]="item.quantity >= item.stock">+</button>
-            </div>
-          </td>
-          <td>₱{{ item.subtotal }}</td>
-          <td class="actions-cell">
-            <button class="remove-btn" (click)="removeItem(item)" aria-label="Remove item"><i class="fas fa-trash"></i></button>
-            <button class="move-btn" (click)="moveToToolbox(item)" aria-label="Move to Toolbox"><i class="fas fa-heart"></i></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div *ngIf="selectedItems.size === 0" class="no-selection-message">
-      No items selected. Choose what you’d like to order.
-    </div>
-    <!-- Removed Remove All Unchecked button as per user request -->
+  <ng-container *ngIf="cartItems$ | async as cartItems; else emptyCart">
+    <div class="cart-container" *ngIf="cartItems.length > 0; else emptyCart">
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>
+              <input
+                type="checkbox"
+                [checked]="selectedItems.size === cartItems.length"
+                (change)="toggleSelectAll()"
+                aria-label="Select All Items"
+              />
+            </th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of cartItems">
+            <td>
+              <input
+                type="checkbox"
+                [checked]="selectedItems.has(item.id)"
+                (change)="toggleItemSelection(item)"
+              />
+            </td>
+            <td class="product-cell">
+              <img class="thumbnail" [src]="item.thumbnail" [alt]="item.name" />
+              <div class="product-info">
+                <h3 class="product-name" [title]="item.name">{{ item.name }}</h3>
+              </div>
+            </td>
+            <td>₱{{ item.price }}</td>
+            <td>
+              <div class="quantity-selector">
+                <button (click)="decreaseQuantity(item)" [disabled]="item.quantity <= 1">-</button>
+                <input type="number" [value]="item.quantity" readonly />
+                <button (click)="increaseQuantity(item)" [disabled]="item.quantity >= item.stock">+</button>
+              </div>
+            </td>
+            <td>₱{{ item.subtotal }}</td>
+            <td class="actions-cell">
+              <button class="remove-btn" (click)="removeItem(item)" aria-label="Remove item"><i class="fas fa-trash"></i></button>
+              <button class="move-btn" (click)="moveToToolbox(item)" aria-label="Move to Toolbox"><i class="fas fa-heart"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="selectedItems.size === 0" class="no-selection-message">
+        No items selected. Choose what you’d like to order.
+      </div>
 
-    <div class="coupon-section" style="margin-top: 1rem;">
-      <input
-        type="text"
-        placeholder="Enter Coupon Code"
-        [(ngModel)]="couponCode"
-        [disabled]="couponApplied"
-      />
-      <button (click)="applyCoupon()" [disabled]="couponApplied">Apply</button>
-    </div>
-    <p class="coupon-feedback" [class.success]="couponApplied" [class.error]="!couponApplied && couponFeedback">
-      {{ couponFeedback }}
-    </p>
+      <div class="coupon-section" style="margin-top: 1rem;">
+        <input
+          type="text"
+          placeholder="Enter Coupon Code"
+          [(ngModel)]="couponCode"
+          [disabled]="couponApplied"
+        />
+        <button (click)="applyCoupon()" [disabled]="couponApplied">Apply</button>
+      </div>
+      <p class="coupon-feedback" [class.success]="couponApplied" [class.error]="!couponApplied && couponFeedback">
+        {{ couponFeedback }}
+      </p>
 
-    <div class="order-summary">
-      <table>
-        <tr>
-          <td>Subtotal</td>
-          <td>₱{{ subtotal }}</td>
-        </tr>
-        <tr>
-          <td>Shipping</td>
-          <td *ngIf="shipping === 0">Free</td>
-          <td *ngIf="shipping !== 0">₱{{ shipping }}</td>
-        </tr>
-        <tr *ngIf="couponApplied">
-          <td>Coupon Applied</td>
-          <td>{{ couponCode }}</td>
-        </tr>
-        <tr *ngIf="couponApplied">
-          <td>Discount</td>
-          <td>-₱{{ discountAmount | number:'1.2-2' }}</td>
-        </tr>
-        <tr class="total-row">
-          <td><strong>Total</strong></td>
-          <td><strong>₱{{ total }}</strong></td>
-        </tr>
-    </table>
-    </div>
+      <div class="order-summary">
+        <table>
+          <tr>
+            <td>Subtotal</td>
+            <td>₱{{ subtotal }}</td>
+          </tr>
+          <tr>
+            <td>Shipping</td>
+            <td *ngIf="shipping === 0">Free</td>
+            <td *ngIf="shipping !== 0">₱{{ shipping }}</td>
+          </tr>
+          <tr *ngIf="couponApplied">
+            <td>Coupon Applied</td>
+            <td>{{ couponCode }}</td>
+          </tr>
+          <tr *ngIf="couponApplied">
+            <td>Discount</td>
+            <td>-₱{{ discountAmount | number:'1.2-2' }}</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Total</strong></td>
+            <td><strong>₱{{ total }}</strong></td>
+          </tr>
+        </table>
+      </div>
 
-    <div class="cart-actions">
-      <button class="continue-shopping-btn" (click)="continueShopping()">Continue Shopping</button>
+      <div class="cart-actions">
+        <button class="continue-shopping-btn" (click)="continueShopping()">Continue Shopping</button>
 
-      <div class="checkout-container">
-        <button
-          class="checkout-btn"
-          (click)="proceedToCheckout()"
-          [disabled]="!hasSelectedItems"
-        >
-          Proceed to Checkout
-        </button>
+        <div class="checkout-container">
+          <button
+            class="checkout-btn"
+            (click)="proceedToCheckout()"
+            [disabled]="!hasSelectedItems"
+          >
+            Proceed to Checkout
+          </button>
+        </div>
       </div>
     </div>
+  </ng-container>
 
   <ng-template #emptyCart>
     <div class="empty-cart-message">
-      <h1>Your Shopping Cart</h1>
-      <p>Your cart is currently empty.</p>
+      <img src="assets/empty-cart.webp" alt="Empty Cart" class="empty-cart-image" />
+      <p>No products yet. Your cart is empty.</p>
     </div>
   </ng-template>
 </div>

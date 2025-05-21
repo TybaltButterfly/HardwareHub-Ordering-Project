@@ -1,0 +1,151 @@
+<app-navbar></app-navbar>
+<div class="checkout-container">
+  <button class="back-btn" (click)="goBack()"><i class="fas fa-arrow-left"></i></button>
+  <h1 class="page-title">Check Out</h1>
+  <div class="checkout-layout">
+    <!-- Left Column: Main Section -->
+    <div class="main-section">
+      <!-- Billing Details Section -->
+      <section class="billing-details">
+        <h2>Billing Details</h2>
+        <form>
+          <div class="name-fields">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input id="firstName" type="text" [(ngModel)]="billingFirstName" name="firstName" required />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input id="lastName" type="text" [(ngModel)]="billingLastName" name="lastName" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input id="email" type="email" [(ngModel)]="billingEmail" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input id="phone" type="tel" [(ngModel)]="billingPhone" name="phone" required />
+          </div>
+          <div class="form-group">
+            <label for="streetAddress1">Street Address</label>
+            <input id="streetAddress1" type="text" [(ngModel)]="billingStreet1" name="streetAddress1" required />
+          </div>
+          <div class="form-group">
+            <label for="barangay">Barangay</label>
+            <input id="barangay" type="text" [(ngModel)]="billingBarangay" name="barangay" required />
+          </div>
+          <div class="form-group">
+            <label for="town">Town</label>
+            <input id="town" type="text" [(ngModel)]="billingTown" name="town" required />
+          </div>
+          <div class="form-group">
+            <label for="city">City</label>
+            <input id="city" type="text" [(ngModel)]="billingCity" name="city" required />
+          </div>
+          <div class="form-group">
+            <label for="zip">ZIP / Postal Code</label>
+            <input id="zip" type="text" [(ngModel)]="billingZip" name="zip" required />
+          </div>
+          <div class="form-group checkbox-group">
+            <input id="saveInfo" type="checkbox" [(ngModel)]="saveInfo" name="saveInfo" />
+            <label for="saveInfo">Save my information for a faster checkout</label>
+          </div>
+        </form>
+      </section>
+
+      <!-- Shipping Address Section -->
+      <section class="shipping-address" *ngIf="shipToDifferentAddress">
+        <h2>Shipping Address</h2>
+        <form>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="shippingOption" value="same" [(ngModel)]="shippingOption" /> Same as billing address
+            </label>
+            <label>
+              <input type="radio" name="shippingOption" value="different" [(ngModel)]="shippingOption" /> Ship to a different address
+            </label>
+          </div>
+          <div *ngIf="shippingOption === 'different'">
+            <div class="form-group">
+            <label for="shippingStreet1">Street Address</label>
+            <input id="shippingStreet1" type="text" [(ngModel)]="shippingStreet1" name="shippingStreet1" required />
+            <input id="shippingStreet2" type="text" [(ngModel)]="shippingStreet2" name="shippingStreet2" placeholder="Apartment, suite, unit, etc. (optional)" />
+          </div>
+          <div class="form-group">
+            <label for="shippingBarangay">Barangay</label>
+            <input id="shippingBarangay" type="text" [(ngModel)]="shippingBarangay" name="shippingBarangay" required />
+          </div>
+          <div class="form-group">
+            <label for="shippingTown">Town</label>
+            <input id="shippingTown" type="text" [(ngModel)]="shippingTown" name="shippingTown" required />
+          </div>
+          <div class="form-group">
+            <label for="shippingCity">City</label>
+            <input id="shippingCity" type="text" [(ngModel)]="shippingCity" name="shippingCity" required />
+          </div>
+            <div class="form-group">
+              <label for="shippingZip">ZIP / Postal Code</label>
+              <input id="shippingZip" type="text" [(ngModel)]="shippingZip" name="shippingZip" required />
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Shipping Method Section -->
+      <section class="shipping-method">
+        <h2>Shipping Method</h2>
+        <p class="estimated-delivery">Arrives by Monday, June 7</p>
+        <p class="shipping-cost">Shipping cost: ₱5.00</p>
+      </section>
+
+      <!-- Payment Method Section -->
+      <section class="payment-method">
+        <h2>Payment Method</h2>
+        <form>
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="Gcash" [(ngModel)]="paymentMethod" />
+            <img src="assets/gcash-seeklogo.png" alt="Gcash" class="payment-icon" />
+            Gcash
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="Cash on Delivery" [(ngModel)]="paymentMethod" />
+            <span class="cod-icon">💵</span>
+            Cash on Delivery
+          </label>
+        </form>
+      </section>
+
+      <!-- Final Action Button -->
+      <button class="pay-now-btn" (click)="placeOrder()">Pay Now</button>
+    </div>
+
+    <!-- Right Column: Sidebar -->
+    <aside class="order-summary">
+      <h2>Order Summary</h2>
+      <ul class="product-list">
+          <li *ngFor="let item of cartItems" class="product-item">
+            <div class="product-info">
+              <span class="product-name">{{item.name}}</span>
+              <span class="product-quantity">Qty: {{item.quantity}}</span>
+              <span class="product-price">₱{{item.price}}</span>
+            </div>
+          </li>
+      </ul>
+      <div class="summary-box">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>₱{{totalPrice}}</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span>₱5.00</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>₱{{totalPrice + 5}}</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>

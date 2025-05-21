@@ -1,14 +1,85 @@
 /* Styles for the search results component */
 .search-results {
   padding: 20px;
+  font-family: var(--primary-font);
+  color: var(--text-primary);
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.arrow-back {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--primary-color);
+  padding: 0;
+  margin-top: 30px;
+  margin-bottom: 25px;
+  margin-left: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.arrow-back:hover {
+  color: var(--primary-light);
 }
 
 .search-results h2 {
-  font-size: 1.5em;
-  margin-bottom: 10px;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+  font-weight: 600;
 }
 
-.search-results p {
+.search-results ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-results li.product-item {
+  border-bottom: 1px solid var(--border-color);
+  padding: 15px 10px;
+  transition: background-color 0.3s ease;
+  border-radius: 6px;
+}
+
+.search-results li.product-item:last-child {
+  border-bottom: none;
+}
+
+.search-results li.product-item a {
+  text-decoration: none;
+  color: var(--text-primary);
+  display: block;
+}
+
+.search-results li.product-item:hover,
+.search-results li.product-item a:hover {
+  background-color: var(--primary-dark);
+  color: var(--white);
+}
+
+
+.search-results li.product-item h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.3em;
+  font-weight: 700;
+}
+
+.search-results li.product-item p {
+  margin: 4px 0;
   font-size: 1em;
-  color: #666;
+  color: var(--text-secondary);
+}
+
+.search-results li.product-item p:last-child {
+  font-weight: 600;
+  color: var(--primary-color);
 }
