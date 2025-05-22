@@ -36,7 +36,10 @@ ngOnInit(): void {
     if (foundProduct) {
       this.product = {
         ...foundProduct,
-        stock: Number(foundProduct.stock ?? 0)
+        stock: Number(foundProduct.stock ?? 0),
+        detailsText: foundProduct.detailsText ?? 'No details available.',
+        detailsList: foundProduct.detailsList ?? [],
+        reviews: foundProduct.reviews ?? []
       };
       this.quantity = 1;
       this.loadRecommendedProducts();

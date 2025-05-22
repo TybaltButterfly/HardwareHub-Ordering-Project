@@ -17,7 +17,7 @@ export interface Product {
 
   detailsText?: string;
   detailsList?: string[];
-  reviews?: { author: string; comment: string }[];
+  reviews?: Review[];
 
   stock?: number;
   status?: boolean;
@@ -28,6 +28,12 @@ export interface Product {
   
   availableLocations?: string[];
   deliveryEstimate?: string;
+}
+
+export interface Review {
+  author: string;
+  comment: string;
+  rating?: number;
 }
 
 @Injectable({
@@ -72,7 +78,18 @@ export class ProductService {
           availableLocations: ['Maya'],
           deliveryEstimate: 'Delivers by Friday in Maya',
           stock: 20,
-          status: true
+          status: true,
+          detailsText: 'Holcim Excel Cement is perfect for durable concrete works. It offers excellent binding strength and long-lasting quality.',
+          detailsList: [
+          'High compressive strength',
+          'Resistant to environmental factors',
+          'Quick setting time',
+          'Suitable for all construction types'
+          ],
+          reviews: [
+          { author: 'Christopher Aluba', comment: 'Very reliable cement. Helped my house foundation.', rating: 5 },
+          { author: 'Rolando Lima', comment: 'Good quality for the price.', rating: 4 }
+          ]
         },
         {
           id: 102,

@@ -41,27 +41,46 @@
 
   <!-- Tabs Section -->
   <div class="middle-section">
-    <div class="tabs">
-      <input type="radio" id="tab-details" name="tab-group" checked />
-      <label for="tab-details">Details</label>
-      <input type="radio" id="tab-reviews" name="tab-group" />
-      <label for="tab-reviews">Reviews</label>
+  <div class="tabs">
+  <!-- Radio Inputs (hidden) -->
+  <input type="radio" id="tab-details" name="tab-group" checked>
+  <label for="tab-details">Details</label>
 
-      <div class="tab-content" id="details-content">
-        <p>{{ product.detailsText }}</p>
-        <ul>
-          <li *ngFor="let detail of product.detailsList">{{ detail }}</li>
-        </ul>
-      </div>
+  <input type="radio" id="tab-reviews" name="tab-group">
+  <label for="tab-reviews">Reviews</label>
 
-      <div class="tab-content" id="reviews-content">
-        <div *ngFor="let review of product.reviews">
-          <p><strong>{{ review.author }}</strong>: {{ review.comment }}</p>
-        </div>
-        <p *ngIf="!product.reviews || product.reviews.length === 0">No customer reviews available.</p>
+  <!-- Tab Contents -->
+  <div id="details-content" class="tab-content">
+    <p *ngIf="product.detailsText">{{ product.detailsText }}</p>
+    <ul *ngIf="product.detailsList?.length">
+      <li *ngFor="let item of product.detailsList">{{ item }}</li>
+    </ul>
+  </div>
+
+<div id="reviews-content" class="tab-content reviews-content">
+  <div *ngIf="product?.reviews?.length; else noReviews">
+    <div *ngFor="let review of product.reviews" class="review">
+      <div class="review-author">
+        <strong>{{ review.author }}</strong>
       </div>
+      <div class="review-rating">
+        <ng-container *ngIf="review.rating; else noRating">
+          <i *ngFor="let star of [1,2,3,4,5]" 
+             class="fa" 
+             [ngClass]="star <= review.rating ? 'fa-star filled' : 'fa-star-o'">
+          </i>
+        </ng-container>
+        <ng-template #noRating><span class="no-rating">No rating</span></ng-template>
+      </div>
+      <p class="review-comment">"{{ review.comment }}"</p>
     </div>
   </div>
+  <ng-template #noReviews>
+    <p>No reviews available for this product.</p>
+  </ng-template>
+</div>
+</div>
+
 
   <!-- Recommendations Section -->
   <div class="bottom-section">

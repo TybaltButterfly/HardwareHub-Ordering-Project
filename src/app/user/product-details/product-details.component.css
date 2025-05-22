@@ -220,10 +220,34 @@
   display: block;
 }
 
+
 /* Reviews Section */
 .reviews-content p {
   font-style: italic;
   color: var(--text-secondary);
+}
+.review-rating {
+  color: #ffd700; /* Golden yellow */
+  margin-bottom: 0.5rem;
+}
+
+.review-rating .fa {
+  margin-right: 0.1rem;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.review-rating .filled {
+  color: #ffc107; /* Bright yellow */
+}
+
+.review-rating .fa-star-o {
+  color: #ddd; /* Light gray for unfilled stars */
+}
+
+.no-rating {
+  color: #999;
+  font-style: italic;
 }
 
 /* Bottom Section (Recommendations) */

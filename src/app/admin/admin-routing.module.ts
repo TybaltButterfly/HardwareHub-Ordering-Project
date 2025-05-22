@@ -7,7 +7,6 @@ import { AdminLoginComponent } from './admin-login.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
-
 import { AdminOrdersComponent } from './orders/admin-orders.component';
 import { AdminOrderDetailsComponent } from './orders/admin-order-details.component';
 

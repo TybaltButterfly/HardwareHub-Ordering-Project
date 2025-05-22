@@ -50,6 +50,7 @@ export interface Order {
     barangay: string;
     zip: string;
   };
+  
   shippingDetails?: {
     street1: string;
     street2?: string;
