@@ -112,7 +112,7 @@
     <div class="footer-column quick-links">
       <h3>Resources</h3>
       <ul>
-        <li><a href="#">About HardwareHub</a></li>
+        <li><a href="#" (click)="toggleAboutModal(); $event.preventDefault()">About HardwareHub</a></li>
         <li><a href="#">FAQ</a></li>
         <li><a href="#">Terms of Service</a></li>
         <li><a href="#">Privacy Policy</a></li>
@@ -170,6 +170,29 @@
       <img src="assets/gcash-seeklogo.png" alt="GCash Payment" style="width:120px;">
     </div>
 
+  </div>
+
+  <!-- About HardwareHub Modal -->
+  <div class="modal" *ngIf="showAboutModal">
+    <div class="modal-content">
+      <span class="close-button" (click)="toggleAboutModal()">&times;</span>
+      <h2>About HardwareHub</h2>
+      <p>HardwareHub is your ultimate hardware store On-the-Go, offering a wide range of quality tools and materials for all your DIY and professional needs. We are committed to providing excellent customer service and fast delivery.</p>
+      <h3>Our Mission</h3>
+      <p>To provide high-quality hardware products and exceptional customer service, making hardware shopping convenient and accessible for everyone.</p>
+      <h3>Our Vision</h3>
+      <p>To be the leading hardware store recognized for innovation, reliability, and customer satisfaction.</p>
+      <h3>Core Values</h3>
+      <ul>
+        <li>Customer Focus</li>
+        <li>Integrity</li>
+        <li>Quality</li>
+        <li>Innovation</li>
+        <li>Community</li>
+      </ul>
+      <h3>Contact Us</h3>
+      <p>If you have any questions or feedback, feel free to reach out to us at <a href="mailto:support@hardwarehub.com">support&#64;hardwarehub.com</a>.</p>
+    </div>
   </div>
 
   <!-- Back to Top Button -->

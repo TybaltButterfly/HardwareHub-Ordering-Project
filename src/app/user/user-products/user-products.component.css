@@ -14,19 +14,18 @@
 }
 
 .back-btn {
-  background-color: var(--primary-color);
-  color: white;
+  background: none;
   border: none;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   cursor: pointer;
-  margin-bottom: 1rem;
+  color: var(--primary-dark);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
   transition: background-color 0.3s ease;
 }
 
 .back-btn:hover {
-  background-color: var(--primary-color-dark);
+  background-color: var(--white);
 }
 
 .products {

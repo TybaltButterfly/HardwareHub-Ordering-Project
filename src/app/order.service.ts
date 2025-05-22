@@ -17,6 +17,7 @@ export interface OrderHistoryEntry {
 
 export interface Order {
   orderId: string;
+  userId: string;
   userName: string;
   userEmail?: string;
   items: OrderItem[];
@@ -105,6 +106,18 @@ export class OrderService {
     return orders;
   }
 
+  getOrdersByUserId(userId: string): Order[] {
+    const orders = this.getOrdersFromStorage();
+    this.removeExpiredOrders();
+    return orders.filter(order => order.userId === userId);
+  }
+
+  getOrdersByUserName(userName: string): Order[] {
+    const orders = this.getOrdersFromStorage();
+    this.removeExpiredOrders();
+    return orders.filter(order => order.userName === userName);
+  }
+
   getOrderById(orderId: string): Order | undefined {
     const orders = this.getOrdersFromStorage();
     return orders.find(order => order.orderId === orderId);
@@ -112,8 +125,13 @@ export class OrderService {
 
   addOrder(order: Order): void {
     const orders = this.getOrdersFromStorage();
-    orders.push(order);
-    this.saveOrdersToStorage(orders);
+    const exists = orders.some(o => o.orderId === order.orderId);
+    if (!exists) {
+      orders.push(order);
+      this.saveOrdersToStorage(orders);
+    } else {
+      console.warn(`Order with orderId ${order.orderId} already exists. Skipping add.`);
+    }
   }
 
   updateOrderStatus(orderId: string, status: Order['status']): void {

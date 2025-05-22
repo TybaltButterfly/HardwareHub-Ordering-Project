@@ -11,18 +11,23 @@
       <h1 class="product-title">{{ product.name }}</h1>
       <div class="rating" *ngIf="product.rating !== undefined && product.rating !== null">
         <span *ngFor="let star of [1,2,3,4,5]; let i = index">
-<i class="fa-star" [ngClass]="getStarClass(product.rating, i)"></i>
+          <i class="fa-star" [ngClass]="getStarClass(product.rating, i)"></i>
         </span>
         <span class="rating-value">{{ product.rating.toFixed(1) }}</span>
       </div>
-      <div class="sku-stock">
-        <span>SKU: BOSCH-12MS</span> | <span style="color: rgb(41, 187, 41); font-weight: bold;">In Stock</span>
-      </div>
+<div class="sku-stock">
+  <span>SKU: BOSCH-12MS</span> | 
+  <span 
+    [style.color]="getStock() > 0 ? 'rgb(41, 187, 41)' : 'red'" 
+    style="font-weight: bold;">
+    {{ getStock() > 0 ? ('In Stock: ' + getStock()) : 'Out of Stock' }}
+  </span>
+</div>
       <div class="price">{{ product.price | currency:'PHP':'symbol':'1.2-2' }}</div>
       <div class="quantity-selector">
         <button (click)="decreaseQuantity()">-</button>
-        <input type="text" [value]="quantity" readonly />
-        <button (click)="increaseQuantity()">+</button>
+        <input type="text" [(ngModel)]="quantity" />
+        <button (click)="increaseQuantity()" [disabled]="quantity >= getStock()">+</button>
       </div>
       <div class="action-buttons">
         <button class="add-to-cart-btn" (click)="addToCart(product)">Add to Cart</button>
@@ -62,18 +67,19 @@
   <div class="bottom-section">
     <h2>You might also like</h2>
     <div class="recommendations-carousel">
-<div class="recommendation-card" *ngFor="let rec of recommendedProducts">
-  <img [src]="rec.image" alt="{{ rec.name }}" />
-  <div class="rec-name">{{ rec.name }}</div>
-    <div class="sku-stock">
-    <span>{{ rec.price | currency:'PHP':'symbol':'1.2-2' }}</span> | 
-    <span [style.color]="rec.stock && rec.stock > 0 ? 'rgb(41, 187, 41)' : 'red'" [style.font-weight]="'bold'">
-      {{ rec.stock && rec.stock > 0 ? 'In Stock' : 'Out of Stock' }}
-    </span>
-  </div>
-  <button class="wishlist-btn" title="Add to Toolbox" (click)="addToToolbox(rec)">
-    <i class="fa-regular fa-heart"></i>
-  </button>
-</div>
+      <div class="recommendation-card" *ngFor="let rec of recommendedProducts">
+        <img [src]="rec.image" alt="{{ rec.name }}" />
+        <div class="rec-name">{{ rec.name }}</div>
+        <div class="sku-stock">
+          <span>{{ rec.price | currency:'PHP':'symbol':'1.2-2' }}</span> | 
+          <span [style.color]="rec.stock && rec.stock > 0 ? 'rgb(41, 187, 41)' : 'red'" [style.font-weight]="'bold'">
+            {{ rec.stock && rec.stock > 0 ? 'In Stock' : 'Out of Stock' }}
+          </span>
+        </div>
+        <button class="wishlist-btn" title="Add to Toolbox" (click)="addToToolbox(rec)">
+          <i class="fa-regular fa-heart"></i>
+        </button>
+      </div>
     </div>
   </div>
+</div>

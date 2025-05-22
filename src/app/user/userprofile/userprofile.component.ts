@@ -12,7 +12,7 @@ import { UserService, User } from '../../user.service';
   styleUrls: ['./userprofile.component.css']
 })
 export class UserprofileComponent implements OnInit {
-  user: User = { name: '', email: '', profilePicture: '' };
+  user: User = { userId: '', name: '', email: '', profilePicture: '' };
 
   constructor(private router: Router, private userService: UserService) {}
 

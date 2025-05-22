@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../user.service';
+import { CartService } from '../../cart.service';
+import { ToolboxService } from '../toolbox/toolbox.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-signup',
@@ -29,7 +32,12 @@ export class SignupComponent {
   showPassword = false;
   showConfirmPassword = false;
 
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private cartService: CartService,
+    private toolboxService: ToolboxService
+  ) {}
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -98,7 +106,10 @@ export class SignupComponent {
       return;
     }
 
+    const newUserId = uuidv4();
+
     users.push({
+      userId: newUserId,
       email: this.email,
       username: this.username,
       phoneNumber: this.phoneNumber,
@@ -110,12 +121,23 @@ export class SignupComponent {
     const existingCurrentUser = localStorage.getItem('currentUser');
     if (!existingCurrentUser) {
       const newUser = {
+        userId: newUserId,
         name: this.username,
         email: this.email,
         phoneNumber: this.phoneNumber
       };
+
+      // Clear cart and toolbox for new user
+      this.cartService.clearCart();
+      this.toolboxService.clearToolbox();
+
       localStorage.setItem('currentUser', JSON.stringify(newUser));
-      this.userService.updateUser(newUser);
+      this.userService.updateUser({
+        userId: newUser.userId,
+        name: newUser.name,
+        email: newUser.email,
+        profilePicture: ''
+      });
     }
     this.router.navigate(['/signup-complete']);
   }

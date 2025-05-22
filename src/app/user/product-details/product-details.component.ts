@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product, ProductService } from '../../product.service';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../cart.service';
 import { ToolboxService, ToolboxItem } from '../toolbox/toolbox.service';
+import { Subscription } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
   product: Product | undefined;
   quantity: number = 1;
   recommendedProducts: Product[] = [];
+  private subscription: Subscription | undefined;
+  private productId: number | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,10 +28,29 @@ export class ProductDetailsComponent implements OnInit {
     private cartService: CartService
   ) {}
 
-  ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.product = this.productService.getProducts().find(p => p.id === id);
-    this.loadRecommendedProducts();
+ngOnInit(): void {
+  this.productId = Number(this.route.snapshot.paramMap.get('id'));
+
+  this.subscription = this.productService.products$.subscribe(products => {
+    const foundProduct = products.find(p => p.id === this.productId);
+    if (foundProduct) {
+      this.product = {
+        ...foundProduct,
+        stock: Number(foundProduct.stock ?? 0)
+      };
+      this.quantity = 1;
+      this.loadRecommendedProducts();
+    }
+  });
+}
+
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
+  getStock(): number {
+  return Number(this.product?.stock ?? 0);
   }
 
   goBack(): void {
@@ -55,9 +78,15 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
 
-  increaseQuantity(): void {
+increaseQuantity(): void {
+  console.log('Current quantity:', this.quantity);
+  console.log('Product stock:', this.product?.stock);
+
+  if (this.product && this.quantity < (this.product.stock ?? 0)) {
     this.quantity++;
   }
+}
+
 
   decreaseQuantity(): void {
     if (this.quantity > 1) {
@@ -71,12 +100,12 @@ export class ProductDetailsComponent implements OnInit {
       name: product.name,
       thumbnail: (product as any).image ?? '/default-product-image.jpg',
       price: product.salePrice ?? product.price,
-      quantity: 1,
+      quantity: this.quantity,
       stock: product.stock ?? 0,
-      subtotal: product.salePrice ?? product.price,
+      subtotal: (product.salePrice ?? product.price) * this.quantity,
     };
     this.cartService.addItem(cartItem);
-    alert(`${product.name} has been added to the cart.`);
+    alert(`${product.name} (Quantity: ${this.quantity}) has been added to the cart.`);
   }
 
   addToToolbox (product: Product): void {

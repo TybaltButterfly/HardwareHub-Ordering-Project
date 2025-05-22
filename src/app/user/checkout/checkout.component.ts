@@ -110,6 +110,7 @@ export class CheckoutComponent implements OnInit {
 
         const newOrder: Order = {
           orderId: uuidv4(),
+          userId: this.userService.getUser().userId || '',
           userName: this.userName,
           items: orderItems,
           totalPrice: this.totalPrice + this.shippingCost,

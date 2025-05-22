@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { UserService } from '../../user.service';
 
 export interface ToolboxItem {
   id: number;
@@ -18,15 +19,34 @@ export class ToolboxService {
   private toolboxItemsSubject = new BehaviorSubject<ToolboxItem[]>([]);
   toolboxItems$ = this.toolboxItemsSubject.asObservable();
 
-  constructor() {
-    const savedItems = localStorage.getItem('toolboxItems');
+  private storageKeyPrefix = 'hardwarehub_toolbox_items_';
+
+  constructor(private userService: UserService) {
+    this.userService.user$.subscribe(user => {
+      this.loadToolboxItems(user.userId);
+    });
+  }
+
+  private loadToolboxItems(userId: string) {
+    if (!userId) {
+      this.toolboxItemsSubject.next([]);
+      return;
+    }
+    const savedItems = localStorage.getItem(this.storageKeyPrefix + userId);
     if (savedItems) {
-      this.toolboxItemsSubject.next(JSON.parse(savedItems));
+      try {
+        this.toolboxItemsSubject.next(JSON.parse(savedItems));
+      } catch {
+        this.toolboxItemsSubject.next([]);
+      }
+    } else {
+      this.toolboxItemsSubject.next([]);
     }
   }
 
-  private updateLocalStorage(items: ToolboxItem[]) {
-    localStorage.setItem('toolboxItems', JSON.stringify(items));
+  private updateLocalStorage(items: ToolboxItem[], userId: string) {
+    if (!userId) return;
+    localStorage.setItem(this.storageKeyPrefix + userId, JSON.stringify(items));
   }
 
   getToolboxItems(): ToolboxItem[] {
@@ -43,18 +63,23 @@ export class ToolboxService {
       items.push(item);
     }
     this.toolboxItemsSubject.next(items);
-    this.updateLocalStorage(items);
+    const userId = this.userService.getUser().userId;
+    this.updateLocalStorage(items, userId);
   }
 
   removeItem(id: number): void {
     let items = this.getToolboxItems();
     items = items.filter(item => item.id !== id);
     this.toolboxItemsSubject.next(items);
-    this.updateLocalStorage(items);
+    const userId = this.userService.getUser().userId;
+    this.updateLocalStorage(items, userId);
   }
 
   clearToolbox(): void {
     this.toolboxItemsSubject.next([]);
-    localStorage.removeItem('toolboxItems');
+    const userId = this.userService.getUser().userId;
+    if (userId) {
+      localStorage.removeItem(this.storageKeyPrefix + userId);
+    }
   }
 }

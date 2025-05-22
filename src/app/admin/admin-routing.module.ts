@@ -6,7 +6,6 @@ import { UsersComponent } from './users/users.component';
 import { AdminLoginComponent } from './admin-login.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { CategoriesComponent } from './categories/categories.component';
-import { PromotionsComponent } from './promotions/promotions.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 
 import { AdminOrdersComponent } from './orders/admin-orders.component';
@@ -22,10 +21,8 @@ const routes: Routes = [
   { path: 'users', component: UsersComponent },
   { path: 'inventory', component: InventoryComponent },
   { path: 'categories', component: CategoriesComponent },
-  { path: 'promotions', component: PromotionsComponent },
   { path: 'settings', component: AdminSettingsComponent },
 ];
-
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

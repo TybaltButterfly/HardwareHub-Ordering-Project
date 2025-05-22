@@ -56,13 +56,6 @@ export class AdminSidebarComponent {
       ]
     },
     {
-      title: 'Promotions & Coupons',
-      icon: 'fa-solid fa-bullhorn',
-      links: [
-        { label: 'Manage Promotions', route: '/admin/promotions' }
-      ]
-    },
-    {
       title: 'Admin Settings',
       icon: 'fa-solid fa-shield-alt',
       links: [

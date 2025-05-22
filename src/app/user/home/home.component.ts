@@ -17,9 +17,10 @@ import { ToolboxService, ToolboxItem } from '../toolbox/toolbox.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  currentUser: User = { name: '', email: '', profilePicture: '' };
+  currentUser: User = { userId: '', name: '', email: '', profilePicture: '' };
   isAccountOpen = false;
   isCategoriesOpen = false;
+  showAboutModal = false;
   private userSubscription?: Subscription;
   private countdownSubscription?: Subscription;
   flashSales: Product[] = [];
@@ -214,5 +215,9 @@ ngOnInit(): void {
 
   navigateToProductDetails(id: string): void {
     this.router.navigate(['/product-details', id]);
+  }
+
+  toggleAboutModal(): void {
+    this.showAboutModal = !this.showAboutModal;
   }
 }

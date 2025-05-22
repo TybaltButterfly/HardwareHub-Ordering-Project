@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router'; // FIX: Added ActivatedRoute
+import { Router, ActivatedRoute } from '@angular/router'; 
 import { AdminSettingsService } from './admin-settings.service';
 
 @Component({
@@ -52,9 +52,6 @@ export class AdminSettingsComponent implements OnInit {
       lowStockAlerts: true,
       customerInquiryAlerts: true,
     },
-    systemPreferences: {
-      dashboardLayoutStyle: 'card',
-    },
   };
 
   constructor(
@@ -102,9 +99,6 @@ export class AdminSettingsComponent implements OnInit {
         customerInquiryAlerts: [false],
       }),
       adminManagement: this.fb.group({}),
-      systemPreferences: this.fb.group({
-        dashboardLayoutStyle: ['card'],
-      }),
     });
 
     const savedSettings = this.adminSettingsService.getAllSettings();
@@ -126,9 +120,6 @@ export class AdminSettingsComponent implements OnInit {
       }
       if (savedSettings.notifications) {
         this.adminSettingsForm.get('notifications')?.patchValue(savedSettings.notifications);
-      }
-      if (savedSettings.systemPreferences) {
-        this.adminSettingsForm.get('systemPreferences')?.patchValue(savedSettings.systemPreferences);
       }
       if (savedSettings.admins) {
         this.admins = savedSettings.admins;
@@ -220,10 +211,6 @@ export class AdminSettingsComponent implements OnInit {
 
   get notificationsFormGroup(): FormGroup | null {
     return this.getFormGroup('notifications');
-  }
-
-  get systemPreferencesFormGroup(): FormGroup | null {
-    return this.getFormGroup('systemPreferences');
   }
 
   openModal(setting: string) {
@@ -318,9 +305,6 @@ export class AdminSettingsComponent implements OnInit {
           break;
         case 'notifications':
           this.adminSettingsService.saveNotifications(formGroup.value);
-          break;
-        case 'systemPreferences':
-          this.adminSettingsService.saveSystemPreferences(formGroup.value);
           break;
       }
       alert('Settings saved successfully!');

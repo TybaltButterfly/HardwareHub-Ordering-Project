@@ -19,7 +19,7 @@ import { OrderService, Order } from '../../order.service';  // Added import
 })
 
 export class NavbarComponent implements OnInit {
-  currentUser: User = { name: '', email: '', profilePicture: '' };
+  currentUser: User = { userId: '',name: '', email: '', profilePicture: '' };
   isAccountOpen = false;
   isCategoriesOpen = false;
   isMobileMenuOpen = false;
@@ -70,7 +70,8 @@ export class NavbarComponent implements OnInit {
   }
 
   updateOrderCount(): void {
-    const orders = this.orderService.getOrders();
+    const userId = this.currentUser.userId;
+    const orders = this.orderService.getOrdersByUserId(userId);
     this.orderCount = orders.length;
   }
 

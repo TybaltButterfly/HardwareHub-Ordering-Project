@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 export interface User {
+  userId: string;
   name: string;
   email: string;
   profilePicture?: string;
@@ -11,7 +12,7 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private userSubject = new BehaviorSubject<User>({ name: '', email: '', profilePicture: '' });
+  private userSubject = new BehaviorSubject<User>({ userId: '', name: '', email: '', profilePicture: '' });
   user$ = this.userSubject.asObservable();
 
   constructor() {

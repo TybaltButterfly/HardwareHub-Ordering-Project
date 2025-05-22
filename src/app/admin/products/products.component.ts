@@ -34,7 +34,6 @@ export class ProductsComponent implements OnInit {
   isEditMode: boolean = false;
   productForm: any = {
     id: 0,
-    sku: '',
     name: '',
     description: '',
     price: 0,
@@ -72,7 +71,6 @@ export class ProductsComponent implements OnInit {
     this.isEditMode = false;
     this.productForm = {
       id: 0,
-      sku: '',
       name: '',
       description: '',
       price: 0,
@@ -101,15 +99,20 @@ export class ProductsComponent implements OnInit {
     this.openModal();
   }
 
-  saveProduct(): void {
+saveProduct(): void {
     // Update isNew and isPromo based on badgeSelection
     this.productForm.isNew = this.badgeSelection === 'new';
     this.productForm.isPromo = this.badgeSelection === 'promo';
 
+    // Convert stock to number to avoid string issues
+    this.productForm.stock = Number(this.productForm.stock);
+
     if (this.isEditMode) {
       this.adminProductService.updateProduct(this.productForm);
+      alert('Changes saved successfully.');
     } else {
       this.adminProductService.createProduct(this.productForm);
+      alert('Product added successfully.');
     }
     this.showProductForm = false;
     this.loadProducts();
@@ -134,8 +137,6 @@ export class ProductsComponent implements OnInit {
   }
 
   getCategories() {
-    // Return categories from user categories component or a shared service
-    // For now, hardcoded categories similar to user categories component
     return [
       'Power Tools',
       'Hand Tools',
@@ -156,10 +157,13 @@ export class ProductsComponent implements OnInit {
   applyFilters(): void {
     let filtered = this.products;
 
+    if (this.filterCategory) {
+      filtered = filtered.filter(p => p.category.toLowerCase() === this.filterCategory.toLowerCase());
+    }
+
     if (this.searchQuery.trim()) {
       filtered = filtered.filter(p =>
         p.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        p.sku.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
         p.category.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     }

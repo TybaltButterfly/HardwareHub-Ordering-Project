@@ -4,6 +4,7 @@ import { OrderService, Order } from '../../order.service';
 import { Router } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-my-orders',
@@ -16,17 +17,35 @@ export class MyOrdersComponent implements OnInit {
   orders: Order[] = [];
   filteredOrders: Order[] = [];
   filterStatus: string = 'All Orders';
+  currentUserId: string = '';
 
-  constructor(private orderService: OrderService, private router: Router, private location: Location) {}
+  constructor(
+    private orderService: OrderService,
+    private router: Router,
+    private location: Location,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
+    this.userService.user$.subscribe(user => {
+      this.currentUserId = user.userId;
+      console.log('Current User ID:', this.currentUserId);
+      this.loadOrders();
+    });
+  }
+  
+  loadOrders(): void {
+    const userOrders = this.orderService.getOrdersByUserId(this.currentUserId);
+    console.log('User Orders:', userOrders);
+    this.orders = userOrders;
+    this.applyFilter();
+  }
+
+  // Add a method to refresh orders manually if needed
+  refreshOrders(): void {
     this.loadOrders();
   }
 
-  loadOrders(): void {
-    this.orders = this.orderService.getOrders();
-    this.applyFilter();
-  }
 
   applyFilter(): void {
     if (this.filterStatus === 'All Orders') {
@@ -71,9 +90,6 @@ export class MyOrdersComponent implements OnInit {
   }
 
   reorder(order: Order): void {
-    // Assuming a cart service exists to add items to cart
-    // This is a placeholder implementation
-    // You may need to inject CartService and call its addItems method
     alert('Reorder feature is not implemented yet.');
   }
 

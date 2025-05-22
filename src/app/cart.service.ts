@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { UserService } from './user.service';
 
 export interface CartItem {
   id: number;
@@ -22,11 +23,20 @@ export class CartService {
   private selectedItemIdsSubject: BehaviorSubject<Set<number>> = new BehaviorSubject<Set<number>>(new Set());
   selectedItemIds$: Observable<Set<number>> = this.selectedItemIdsSubject.asObservable();
 
-  private storageKey = 'hardwarehub_cart_items';
+  private storageKeyPrefix = 'hardwarehub_cart_items_';
 
-  constructor() {
-    // Load cart items from localStorage if available
-    const storedItems = localStorage.getItem(this.storageKey);
+  constructor(private userService: UserService) {
+    this.userService.user$.subscribe(user => {
+      this.loadCartItems(user.userId);
+    });
+  }
+
+  private loadCartItems(userId: string) {
+    if (!userId) {
+      this.cartItemsSubject.next([]);
+      return;
+    }
+    const storedItems = localStorage.getItem(this.storageKeyPrefix + userId);
     if (storedItems) {
       try {
         const items: CartItem[] = JSON.parse(storedItems);
@@ -37,11 +47,11 @@ export class CartService {
     } else {
       this.cartItemsSubject.next([]);
     }
+  }
 
-    // Subscribe to changes and persist to localStorage
-    this.cartItems$.subscribe(items => {
-      localStorage.setItem(this.storageKey, JSON.stringify(items));
-    });
+  private saveCartItems(userId: string, items: CartItem[]) {
+    if (!userId) return;
+    localStorage.setItem(this.storageKeyPrefix + userId, JSON.stringify(items));
   }
 
   getCartItems(): CartItem[] {
@@ -50,6 +60,8 @@ export class CartService {
 
   setCartItems(items: CartItem[]): void {
     this.cartItemsSubject.next(items);
+    const userId = this.userService.getUser().userId;
+    this.saveCartItems(userId, items);
   }
 
   setSelectedItemIds(ids: Set<number>): void {
@@ -74,12 +86,12 @@ export class CartService {
     } else {
       items.push(item);
     }
-    this.cartItemsSubject.next([...items]);
+    this.setCartItems([...items]);
   }
 
   removeItem(itemId: number): void {
     const items = this.getCartItems().filter(item => item.id !== itemId);
-    this.cartItemsSubject.next(items);
+    this.setCartItems(items);
   }
 
   updateItemQuantity(itemId: number, quantity: number): void {
@@ -88,12 +100,16 @@ export class CartService {
     if (index !== -1) {
       items[index].quantity = quantity;
       items[index].subtotal = items[index].price * quantity;
-      this.cartItemsSubject.next([...items]);
+      this.setCartItems([...items]);
     }
   }
 
   clearCart(): void {
     this.cartItemsSubject.next([]);
+    const userId = this.userService.getUser().userId;
+    if (userId) {
+      localStorage.removeItem(this.storageKeyPrefix + userId);
+    }
   }
 
   getItemCount(): number {

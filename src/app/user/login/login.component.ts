@@ -79,12 +79,14 @@ export class LoginComponent {
 
     // Set currentUser in localStorage for display in home component
     localStorage.setItem('currentUser', JSON.stringify({
+      userId: userByIdentifier.userId || '',
       name: userByIdentifier.username || userByIdentifier.name || userByIdentifier.email,
       email: userByIdentifier.email
     }));
 
     // Update userService with new user info
     this.userService.updateUser({
+      userId: userByIdentifier.userId || '',
       name: userByIdentifier.username || userByIdentifier.name || userByIdentifier.email,
       email: userByIdentifier.email
     });

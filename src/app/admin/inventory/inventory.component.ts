@@ -40,6 +40,6 @@ export class InventoryComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/admin/dashboard']);
+    this.router.navigate(['/admin']);
   }
 }

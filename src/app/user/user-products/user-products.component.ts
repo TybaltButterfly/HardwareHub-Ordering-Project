@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
 import { Product, ProductService } from '../../product.service';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-user-products',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NavbarComponent],
   templateUrl: './user-products.component.html',
   styleUrls: ['./user-products.component.css'],
   encapsulation: ViewEncapsulation.None,

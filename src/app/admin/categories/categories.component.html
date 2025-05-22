@@ -1,0 +1,76 @@
+<div class="categories-container">
+  <button (click)="goBack()" class="back-btn">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+  <h2>Admin Categories Management</h2>
+
+  <div class="add-category-form">
+    <h3>Add New Category</h3>
+    <form (ngSubmit)="addCategory()">
+      <label>
+        Name:
+        <input type="text" [(ngModel)]="newCategory.name" name="name" required />
+      </label>
+      <label>
+        Image URL:
+        <input type="text" [(ngModel)]="newCategory.image" name="image" required />
+      </label>
+      <label>
+        Caption:
+        <input type="text" [(ngModel)]="newCategory.caption" name="caption" />
+      </label>
+      <label>
+        Alt Text:
+        <input type="text" [(ngModel)]="newCategory.altText" name="altText" />
+      </label>
+      <button type="submit">Add Category</button>
+    </form>
+  </div>
+
+  <div class="categories-list">
+    <h3>Existing Categories</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Caption</th>
+          <th>Alt Text</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <td *ngIf="editCategory?.id !== category.id">{{ category.name }}</td>
+          <td *ngIf="editCategory?.id === category.id">
+            <input *ngIf="editCategory" [(ngModel)]="editCategory.name" />
+          </td>
+
+          <td *ngIf="editCategory?.id !== category.id">
+            <img [src]="category?.image" [alt]="category?.altText" class="category-image" />
+          </td>
+          <td *ngIf="editCategory?.id === category.id">
+            <input *ngIf="editCategory" [(ngModel)]="editCategory.image" />
+          </td>
+
+          <td *ngIf="editCategory?.id !== category.id">{{ category?.caption }}</td>
+          <td *ngIf="editCategory?.id === category.id">
+            <input *ngIf="editCategory" [(ngModel)]="editCategory.caption" />
+          </td>
+
+          <td *ngIf="editCategory?.id !== category.id">{{ category?.altText }}</td>
+          <td *ngIf="editCategory?.id === category.id">
+            <input *ngIf="editCategory" [(ngModel)]="editCategory.altText" />
+          </td>
+
+          <td>
+            <button *ngIf="editCategory?.id !== category.id" (click)="startEdit(category)">Edit</button>
+            <button *ngIf="editCategory?.id === category.id" (click)="saveEdit()">Save</button>
+            <button *ngIf="editCategory?.id === category.id" (click)="cancelEdit()">Cancel</button>
+            <button (click)="deleteCategory(category.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
